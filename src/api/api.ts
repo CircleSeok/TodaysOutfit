@@ -1,4 +1,3 @@
-// api.ts
 import axios from 'axios';
 
 // 카테고리 번호를 한글로 변환하는 함수
@@ -46,8 +45,8 @@ export const fetchWeatherData = async () => {
       dataType: 'JSON',
       base_date: baseDate,
       base_time: baseTime,
-      nx: ' 58', // 서울의 예보지점 X 좌표 37  127
-      ny: '133', // 서울의 예보지점 Y 좌표
+      nx: ' 58',
+      ny: '133',
     };
 
     const response = await axios.get(apiUrl, { params });

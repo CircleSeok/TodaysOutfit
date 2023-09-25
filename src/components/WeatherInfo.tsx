@@ -1,4 +1,3 @@
-// WeatherInfo.tsx
 import React from 'react';
 
 type WeatherItem = {
