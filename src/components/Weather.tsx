@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { fetchWeatherData } from '../api/api';
 import './Weather.css';
 import { GiClothes } from 'react-icons/gi';
@@ -9,20 +9,23 @@ export default function Weather() {
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const [cityName, setCityName] = useState<string>('서울');
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await fetchWeatherData(cityName);
-        setWeatherData(data);
-      } catch (error) {
-        console.error('날씨 정보를 불러올 수 없습니다.', error);
-      }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 기본 제출 동작 방지
+    try {
+      const data = await fetchWeatherData(cityName);
+      setWeatherData(data);
+    } catch (error) {
+      console.error('날씨 정보를 불러올 수 없습니다.', error);
     }
+  };
 
-    if (cityName) {
-      fetchData();
-    }
-  }, [cityName, setWeatherData]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCityName(e.target.value);
+  };
+  useEffect(() => {
+    // 초기 로딩 시에도 데이터를 불러올 수 있도록 합니다.
+    handleSubmit({} as React.FormEvent<HTMLFormElement>);
+  }, [setWeatherData]);
 
   const weatherData: WeatherData | null = useWeatherStore(
     (state) => state.weatherData
@@ -35,12 +38,14 @@ export default function Weather() {
           <h1>오늘 뭐 입지?</h1>
         </div>
         <div className='navbar-middle'>
-          <input
-            type='text'
-            placeholder='도시 이름을 입력하세요'
-            value={cityName}
-            onChange={(e) => setCityName(e.target.value)}
-          />
+          <form onSubmit={handleSubmit}>
+            <input
+              type='text'
+              placeholder='도시 이름을 입력하세요'
+              value={cityName}
+              onChange={handleChange}
+            />
+          </form>
         </div>
         <div className='navbar-right'>
           <GiClothes />
