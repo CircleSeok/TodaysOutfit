@@ -1,4 +1,3 @@
-// WeatherData.ts
 interface WeatherData {
   weather: {
     description: string;
@@ -12,6 +11,12 @@ interface WeatherData {
   coord: {
     lat: number;
     lon: number;
+  };
+  rain?: {
+    '1h': number; // 비 예측량 (1시간 단위)
+  };
+  snow?: {
+    '1h': number; // 눈 예측량 (1시간 단위)
   };
 }
 

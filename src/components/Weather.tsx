@@ -10,7 +10,7 @@ export default function Weather() {
   const [cityName, setCityName] = useState<string>('서울');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 기본 제출 동작 방지
+    e.preventDefault();
     try {
       const data = await fetchWeatherData(cityName);
       setWeatherData(data);
@@ -24,7 +24,9 @@ export default function Weather() {
   };
   useEffect(() => {
     // 초기 로딩 시에도 데이터를 불러올 수 있도록 합니다.
-    handleSubmit({} as React.FormEvent<HTMLFormElement>);
+    handleSubmit({
+      preventDefault: () => {},
+    } as React.FormEvent<HTMLFormElement>);
   }, [setWeatherData]);
 
   const weatherData: WeatherData | null = useWeatherStore(
@@ -58,6 +60,8 @@ export default function Weather() {
           <p>온도: {weatherData.main.temp}°C</p>
           <p>습도: {weatherData.main.humidity}%</p>
           <p>기압: {weatherData.main.pressure} hPa</p>
+          {weatherData.rain && <p>비 예측: {weatherData.rain['1h']}mm</p>}
+          {weatherData.snow && <p>눈 예측: {weatherData.snow['1h']}mm</p>}
         </div>
       ) : (
         <p>날씨 정보를 불러오는 중입니다...</p>
