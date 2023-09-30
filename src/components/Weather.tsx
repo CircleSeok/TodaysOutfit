@@ -5,6 +5,21 @@ import { GiClothes } from 'react-icons/gi';
 import useWeatherStore from '../store/WeatherStore';
 import WeatherData from '../types/WeatherData';
 
+// 도시 이름을 변환하는 함수
+function transformCityName(cityName: string): string {
+  const cityMappings: { [key: string]: string } = {
+    seoul: '서울',
+    busan: '부산',
+    incheon: '인천',
+    daegu: '대구',
+    ulsan: '울산',
+    suwon: '수원',
+    daejeon: '대전',
+  };
+
+  return cityMappings[cityName.toLowerCase()] || cityName;
+}
+
 export default function Weather() {
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const [cityName, setCityName] = useState<string>('서울');
@@ -23,7 +38,6 @@ export default function Weather() {
     setCityName(e.target.value);
   };
   useEffect(() => {
-    // 초기 로딩 시에도 데이터를 불러올 수 있도록 합니다.
     handleSubmit({
       preventDefault: () => {},
     } as React.FormEvent<HTMLFormElement>);
@@ -55,7 +69,7 @@ export default function Weather() {
       </nav>
       {weatherData ? (
         <div>
-          <h2>{weatherData.name}</h2>
+          <h2>{transformCityName(weatherData.name)}</h2>
           <p>날씨: {weatherData.weather[0].description}</p>
           <p>온도: {weatherData.main.temp}°C</p>
           <p>습도: {weatherData.main.humidity}%</p>
