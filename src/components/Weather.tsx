@@ -23,6 +23,24 @@ export default function Weather() {
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const weatherData = useWeatherStore((state) => state.weatherData);
 
+  let temperatureClass = '';
+
+  if (weatherData) {
+    const temperature = weatherData.main.temp;
+    if (temperature >= 23 && temperature <= 28) {
+      temperatureClass = 'hot-background';
+    } else if (temperature >= 12 && temperature <= 22) {
+      temperatureClass = 'warm-background';
+    } else {
+      temperatureClass = 'cold-background';
+    }
+
+    // 비올 확률에 따라 배경 이미지 설정
+    if (weatherData.rain && weatherData.rain['1h'] > 0) {
+      temperatureClass = 'rainy-background';
+    }
+  }
+
   useEffect(() => {
     async function fetchData(cityName: string) {
       try {
@@ -40,7 +58,7 @@ export default function Weather() {
     <div>
       <Navbar />
       {weatherData ? (
-        <div>
+        <div className={`weather-info ${temperatureClass}`}>
           <h2>{transformCityName(weatherData.name)}</h2>
           <p>날씨: {weatherData.weather[0].description}</p>
           <p>온도: {weatherData.main.temp}°C</p>

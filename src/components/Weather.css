@@ -22,3 +22,25 @@
 .navbar-right {
   font-size: 30px;
 }
+
+.hot-background {
+  background-image: url('../../public/asset/Hot-img.jpg');
+}
+
+.warm-background {
+  background-image: url('../../public/asset/Warm-img.jpg');
+}
+
+.cold-background {
+  background-image: url('../../public/asset/Cold-img.png');
+}
+
+.rainy-background {
+  background-image: url('../../public/asset/Rain-img.png');
+}
+
+.weather-info {
+  width: 100%;
+  height: 1000px;
+  margin: 0 auto;
+}
