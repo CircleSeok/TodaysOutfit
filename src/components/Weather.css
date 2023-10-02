@@ -25,18 +25,30 @@
 
 .hot-background {
   background-image: url('../../public/asset/Hot-img.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .warm-background {
   background-image: url('../../public/asset/Warm-img.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .cold-background {
   background-image: url('../../public/asset/Cold-img.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .rainy-background {
   background-image: url('../../public/asset/Rain-img.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .weather-info {
