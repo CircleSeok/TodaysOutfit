@@ -37,15 +37,29 @@
   background-position: center center;
 }
 
+.fall-background {
+  background-image: url('../../public/asset/Fall-img.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .cold-background {
-  background-image: url('../../public/asset/Cold-img.png');
+  background-image: url('../../public/asset/Cold-img.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 .rainy-background {
-  background-image: url('../../public/asset/Rain-img.png');
+  background-image: url('../../public/asset/Rain-img.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.snow-background {
+  background-image: url('../../public/asset/Snow-img.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
