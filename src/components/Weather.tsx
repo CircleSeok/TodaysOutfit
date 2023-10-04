@@ -63,7 +63,7 @@ export default function Weather() {
       <Navbar />
       {weatherData ? (
         <div className={`weather-info ${temperatureClass}`}>
-          <div style={{ backgroundColor: 'white' }}>
+          <div className='weather-data-container'>
             <h2>{transformCityName(weatherData.name)}</h2>
             <p>날씨: {weatherData.weather[0].description}</p>
             <p>온도: {weatherData.main.temp}°C</p>
