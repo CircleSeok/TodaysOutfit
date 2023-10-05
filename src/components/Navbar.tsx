@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { fetchWeatherData } from '../api/api';
 import { GiClothes } from 'react-icons/gi';
 import useWeatherStore from '../store/WeatherStore';
+import {
+  NavbarContainer,
+  NavbarLeft,
+  NavbarMiddle,
+  NavbarRight,
+} from './NavbarStyles';
 
 export default function Navbar() {
   const [cityName, setCityName] = useState<string>('');
@@ -22,24 +28,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className='navbar' style={{ height: '70px' }}>
-      <div className='navbar-left'>
+    <NavbarContainer>
+      <NavbarLeft>
         <h1>오늘 뭐 입지?</h1>
-      </div>
-      <div className='navbar-middle'>
+      </NavbarLeft>
+      <NavbarMiddle>
         <form onSubmit={handleSubmit}>
           <input
             type='text'
             placeholder='도시 이름을 입력하고 엔터'
             value={cityName}
             onChange={handleChange}
-            style={{ width: '500px', textAlign: 'center', height: '30px' }}
           />
         </form>
-      </div>
-      <div className='navbar-right'>
+      </NavbarMiddle>
+      <NavbarRight>
         <GiClothes />
-      </div>
-    </nav>
+      </NavbarRight>
+    </NavbarContainer>
   );
 }
