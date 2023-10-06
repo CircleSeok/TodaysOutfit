@@ -18,8 +18,6 @@ export const WeatherDataContainer = styled.div`
   width: 10%;
   text-align: center;
   padding: 20px;
-  margin-right: 100px;
-  margin-top: 100px;
 `;
 
 interface WeatherBackgroundProps {
