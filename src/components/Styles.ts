@@ -1,24 +1,15 @@
 import styled, { css } from 'styled-components';
 
-export const WeatherInfo = styled.div`
-  margin: 100px auto;
-  background-color: white;
-  width: 70%;
-  height: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-`;
-
 export const WeatherDataContainer = styled.div`
   border: solid 1px black;
-  background-color: white;
+  background-color: rgba(192, 192, 192, 0.5);
   border-radius: 15px;
-  width: 10%;
+  width: 30%;
   text-align: center;
   padding: 20px;
-  margin-left: 1650px;
+  float: right;
+
+  height: 95%;
 `;
 
 interface WeatherBackgroundProps {
@@ -26,11 +17,11 @@ interface WeatherBackgroundProps {
 }
 export const WeatherBackground = styled.div<WeatherBackgroundProps>`
   background-image: url(${(props) => props.backgroundImage});
-  background-size: 70% 70%; /* 이미지 크기 조절 */
+  background-size: cover; /* 이미지 크기를 화면에 맞게 조절합니다. */
   background-repeat: no-repeat;
   background-position: center center;
-  width: 100%;
-  height: 100%;
+  width: 100%; /* 전체 화면 넓이로 설정합니다. */
+  height: 100%; /* 높이를 100%로 설정합니다. */
 `;
 
 export const WeatherDisplayContainer = styled.div`
