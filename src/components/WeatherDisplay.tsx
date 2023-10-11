@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import WeatherData from '../types/WeatherData';
-import { WeatherDataContainer, WeatherBackground } from './Styles';
+import {
+  WeatherDataContainer,
+  WeatherBackground,
+  WeatherDisplayContainer,
+} from './Styles';
 import {
   transformCityName,
   getWeatherImage,
@@ -31,18 +35,20 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const city = transformCityName(weatherData.name);
 
   return (
-    <WeatherBackground backgroundImage={backgroundImage}>
-      <WeatherDataContainer>
-        <h2>{city}</h2>
-        <p>날씨: {weatherData.weather[0].description}</p>
-        <p>온도: {weatherData.main.temp}°C</p>
-        <p>습도: {weatherData.main.humidity}%</p>
-        <p>기압: {weatherData.main.pressure} hPa</p>
-        {weatherData.rain && <p>비 예측: {weatherData.rain['1h']}mm</p>}
-        {weatherData.snow && <p>눈 예측: {weatherData.snow['1h']}mm</p>}
-        <p>옷차림: {getWeatherOutfit(weatherData.main.temp)}</p>
-      </WeatherDataContainer>
-    </WeatherBackground>
+    <WeatherDisplayContainer>
+      <WeatherBackground backgroundImage={backgroundImage}>
+        <WeatherDataContainer>
+          <h2>{city}</h2>
+          <p>날씨: {weatherData.weather[0].description}</p>
+          <p>온도: {weatherData.main.temp}°C</p>
+          <p>습도: {weatherData.main.humidity}%</p>
+          <p>기압: {weatherData.main.pressure} hPa</p>
+          {weatherData.rain && <p>비 예측: {weatherData.rain['1h']}mm</p>}
+          {weatherData.snow && <p>눈 예측: {weatherData.snow['1h']}mm</p>}
+          <p>옷차림: {getWeatherOutfit(weatherData.main.temp)}</p>
+        </WeatherDataContainer>
+      </WeatherBackground>
+    </WeatherDisplayContainer>
   );
 };
 
