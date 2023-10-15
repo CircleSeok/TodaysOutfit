@@ -4,6 +4,8 @@ import {
   WeatherDataContainer,
   WeatherBackground,
   WeatherDisplayContainer,
+  WeatherInfo,
+  CityandTemp,
 } from './Styles';
 import {
   transformCityName,
@@ -17,6 +19,7 @@ interface WeatherDisplayProps {
 
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
+  const currentDate = new Date(); // 현재 날짜를 얻기 위해 Date 객체를 사용
 
   useEffect(() => {
     if (weatherData) {
@@ -34,15 +37,32 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
 
   const city = transformCityName(weatherData.name);
 
+  const getDayOfWeek = (date: any) => {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayIndex = date.getDay();
+    return days[dayIndex];
+  };
+
   return (
     <WeatherDisplayContainer>
       <WeatherBackground backgroundImage={backgroundImage}>
+        <WeatherInfo>
+          <p>
+            {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
+            {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
+          </p>
+          <CityandTemp>
+            <h2>{weatherData.main.temp}°C</h2>
+            <h1>{city}</h1>
+          </CityandTemp>
+        </WeatherInfo>
         <WeatherDataContainer>
-          <h2>{city}</h2>
-          <p>날씨: {weatherData.weather[0].description}</p>
-          <p>온도: {weatherData.main.temp}°C</p>
+          <p>
+            최고/최저 온도 :{weatherData.main.temp_max}°C/
+            {weatherData.main.temp_min}°C
+          </p>
           <p>습도: {weatherData.main.humidity}%</p>
-          <p>기압: {weatherData.main.pressure} hPa</p>
+          {weatherData.wind && <p>바람: {weatherData.wind.speed} m/s</p>}
           {weatherData.rain && <p>비 예측: {weatherData.rain['1h']}mm</p>}
           {weatherData.snow && <p>눈 예측: {weatherData.snow['1h']}mm</p>}
           <p>옷차림: {getWeatherOutfit(weatherData.main.temp)}</p>

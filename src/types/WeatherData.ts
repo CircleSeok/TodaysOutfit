@@ -4,8 +4,14 @@ interface WeatherData {
   }[];
   main: {
     temp: number;
+    temp_max: number;
+    temp_min: number;
     humidity: number;
     pressure: number;
+  };
+  wind?: {
+    speed: number; // 풍속 (m/s)
+    deg: number; // 풍향 (도)
   };
   name: string;
   coord: {

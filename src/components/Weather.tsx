@@ -23,7 +23,7 @@ export default function Weather() {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <WeatherDisplay weatherData={weatherData} />
     </div>
   );
