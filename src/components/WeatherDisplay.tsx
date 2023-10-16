@@ -7,12 +7,16 @@ import {
   WeatherInfo,
   CityandTemp,
   LeftBottomContainer,
+  InputContainer,
+  WeatherDetails,
 } from './Styles';
 import {
   transformCityName,
   getWeatherImage,
   getWeatherOutfit,
 } from './WeatherUtils';
+import useWeatherStore from '../store/WeatherStore';
+import { fetchWeatherData } from '../api/api';
 
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
@@ -21,6 +25,24 @@ interface WeatherDisplayProps {
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date(); // 현재 날짜를 얻기 위해 Date 객체를 사용
+
+  const [cityName, setCityName] = useState<string>(''); // 도시 이름을 입력받을 상태
+
+  const setWeatherData = useWeatherStore((state) => state.setWeatherData);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const data = await fetchWeatherData(cityName || '서울');
+      setWeatherData(data);
+    } catch (error) {
+      console.error('날씨 정보를 불러올 수 없습니다.', error);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCityName(e.target.value);
+  };
 
   useEffect(() => {
     if (weatherData) {
@@ -60,15 +82,42 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
           </LeftBottomContainer>
         </WeatherInfo>
         <WeatherDataContainer>
-          <p>
-            최고/최저 온도 :{weatherData.main.temp_max}°C/
-            {weatherData.main.temp_min}°C
-          </p>
-          <p>습도: {weatherData.main.humidity}%</p>
-          {weatherData.wind && <p>바람: {weatherData.wind.speed} m/s</p>}
-          {weatherData.rain && <p>비 예측: {weatherData.rain['1h']}mm</p>}
-          {weatherData.snow && <p>눈 예측: {weatherData.snow['1h']}mm</p>}
-          <p>옷차림: {getWeatherOutfit(weatherData.main.temp)}</p>
+          <InputContainer>
+            <form onSubmit={handleSubmit}>
+              <input
+                type='text'
+                placeholder='SEARCH'
+                value={cityName}
+                onChange={handleChange}
+              />
+            </form>
+          </InputContainer>
+          <WeatherDetails>
+            <h4>Weather Deatails</h4>
+            <div>
+              <p>Max/Min Temp</p>
+              <p>
+                {weatherData.main.temp_max}°C/
+                {weatherData.main.temp_min}°C
+              </p>
+            </div>
+            <div>
+              <p>Humidity</p>
+              <p> {weatherData.main.humidity}%</p>
+            </div>
+            {weatherData.wind && (
+              <div>
+                <p>Wind</p>
+                <p>{weatherData.wind.speed} m/s</p>
+              </div>
+            )}
+            {/* {weatherData.rain && <p>Rain {weatherData.rain['1h']}mm</p>}
+            {weatherData.snow && <p>Snow {weatherData.snow['1h']}mm</p>} */}
+            <div>
+              <p>옷차림</p>
+              <p> {getWeatherOutfit(weatherData.main.temp)}</p>
+            </div>
+          </WeatherDetails>
         </WeatherDataContainer>
       </WeatherBackground>
     </WeatherDisplayContainer>
