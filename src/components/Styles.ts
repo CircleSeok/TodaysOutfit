@@ -8,10 +8,10 @@ export const WeatherDataContainer = styled.div`
   float: right;
   height: 96%;
   color: white;
-  font-size: 26px;
+  font-size: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 세로 정렬을 중간으로 이동시킵니다. */
+  justify-content: center;
 `;
 
 export const WeatherInfo = styled.div`
