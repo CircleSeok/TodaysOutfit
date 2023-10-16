@@ -6,6 +6,7 @@ import {
   WeatherDisplayContainer,
   WeatherInfo,
   CityandTemp,
+  LeftBottomContainer,
 } from './Styles';
 import {
   transformCityName,
@@ -51,10 +52,12 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
             {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
             {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
           </p>
-          <CityandTemp>
-            <h2>{weatherData.main.temp}°C</h2>
-            <h1>{city}</h1>
-          </CityandTemp>
+          <LeftBottomContainer>
+            <CityandTemp>
+              <h2>{weatherData.main.temp}°C</h2>
+              <h1>{city}</h1>
+            </CityandTemp>
+          </LeftBottomContainer>
         </WeatherInfo>
         <WeatherDataContainer>
           <p>

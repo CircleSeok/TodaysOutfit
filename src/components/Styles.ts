@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 
 export const WeatherDataContainer = styled.div`
-  border: solid 1px black;
   background-color: rgba(0, 0, 0, 0.5);
   flex: 3;
   text-align: center;
@@ -10,6 +9,9 @@ export const WeatherDataContainer = styled.div`
   height: 96%;
   color: white;
   font-size: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 정렬을 중간으로 이동시킵니다. */
 `;
 
 export const WeatherInfo = styled.div`
@@ -17,6 +19,14 @@ export const WeatherInfo = styled.div`
   flex-direction: column;
   flex: 7;
   align-items: flex-start;
+`;
+
+export const LeftBottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 100%;
 `;
 
 export const CityandTemp = styled.div`
