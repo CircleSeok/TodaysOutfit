@@ -30,11 +30,12 @@ export const InputContainer = styled.div`
     height: 30px;
     color: white;
     border-bottom: 1px solid white;
-    ::placeholder {
+    &::placeholder {
       color: white;
     }
   }
 `;
+
 export const WeatherDetails = styled.div`
   /* border: solid 1px blue; */
   margin-bottom: 30px;
