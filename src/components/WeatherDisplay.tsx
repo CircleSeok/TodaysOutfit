@@ -17,6 +17,8 @@ import {
 } from './WeatherUtils';
 import useWeatherStore from '../store/WeatherStore';
 import { fetchWeatherData } from '../api/api';
+import { GiClothes } from 'react-icons/gi';
+import { AiOutlineLogin } from 'react-icons/ai';
 
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
@@ -114,8 +116,13 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
             {/* {weatherData.rain && <p>Rain {weatherData.rain['1h']}mm</p>}
             {weatherData.snow && <p>Snow {weatherData.snow['1h']}mm</p>} */}
             <div>
-              <p>옷차림</p>
-              <p> {getWeatherOutfit(weatherData.main.temp)}</p>
+              <p>
+                <GiClothes />
+              </p>
+              <p>
+                <AiOutlineLogin />
+              </p>
+              {/* <p> {getWeatherOutfit(weatherData.main.temp)}</p> */}
             </div>
           </WeatherDetails>
         </WeatherDataContainer>
