@@ -19,6 +19,9 @@ import useWeatherStore from '../store/WeatherStore';
 import { fetchWeatherData } from '../api/api';
 import { GiClothes } from 'react-icons/gi';
 import { AiOutlineLogin } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../api/firebase';
 
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
@@ -26,11 +29,10 @@ interface WeatherDisplayProps {
 
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
-  const currentDate = new Date(); // 현재 날짜를 얻기 위해 Date 객체를 사용
-
+  const currentDate = new Date();
   const [cityName, setCityName] = useState<string>(''); // 도시 이름을 입력받을 상태
-
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,6 +46,20 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(e.target.value);
+  };
+
+  const ClothesClick = () => {
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        navigate('/clothesinfo');
+      } else {
+        navigate('/signup');
+      }
+    });
+  };
+
+  const SignupClick = () => {
+    navigate('/signup');
   };
 
   useEffect(() => {
@@ -117,10 +133,10 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
             {weatherData.snow && <p>Snow {weatherData.snow['1h']}mm</p>} */}
             <div>
               <p>
-                <GiClothes />
+                <GiClothes onClick={ClothesClick} />
               </p>
               <p>
-                <AiOutlineLogin />
+                <AiOutlineLogin onClick={SignupClick} />
               </p>
               {/* <p> {getWeatherOutfit(weatherData.main.temp)}</p> */}
             </div>
