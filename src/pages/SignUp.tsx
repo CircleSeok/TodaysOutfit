@@ -2,6 +2,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { auth, createUser, signIn, signInWithGoogle } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
+import { Container, FormContainer, LogoContainer } from './SignUpStyles';
+import logo from '/asset/Logo.png';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -54,10 +56,12 @@ export default function SignUp() {
     setIsLogin(!isLogin);
   };
 
-  const buttonText = isLogin ? '로그인' : '회원가입';
+  const buttonText = isLogin ? 'Login' : 'Sign Up';
 
   return (
-    <>
+    <Container>
+      <LogoContainer />
+      <div>{buttonText}</div>
       {user ? (
         <div>
           <p>이미 로그인되어 있습니다.</p>
@@ -66,7 +70,7 @@ export default function SignUp() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleAuth}>
+        <FormContainer onSubmit={handleAuth}>
           <input
             type='email'
             placeholder='Email'
@@ -86,8 +90,8 @@ export default function SignUp() {
               ? '회원이 아니신가요? 회원가입'
               : '이미 회원이신가요? 로그인'}
           </p>
-        </form>
+        </FormContainer>
       )}
-    </>
+    </Container>
   );
 }
