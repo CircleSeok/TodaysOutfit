@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { auth, createUser, signIn } from '../api/firebase';
+import { auth, createUser, signIn, signInWithGoogle } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
@@ -80,6 +80,7 @@ export default function SignUp() {
             onChange={handlePasswordChange}
           />
           <button type='submit'>{buttonText}</button>
+          <button onClick={signInWithGoogle}>Google로 로그인</button>
           <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
             {isLogin
               ? '회원이 아니신가요? 회원가입'

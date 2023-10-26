@@ -8,6 +8,8 @@ import {
   onAuthStateChanged,
   User,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -47,5 +49,16 @@ export async function signOutUser() {
     console.log('로그아웃 되었습니다.');
   } catch (error) {
     console.error('로그아웃 중 에러 발생:', error);
+  }
+}
+
+export async function signInWithGoogle(): Promise<UserCredential> {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    return result;
+  } catch (error) {
+    console.error('Google 로그인 중 에러 발생:', error);
+    throw error;
   }
 }
