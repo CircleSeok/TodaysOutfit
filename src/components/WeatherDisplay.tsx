@@ -51,7 +51,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const ClothesClick = () => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
-        navigate('/clothesinfo');
+        navigate('/clothes');
       } else {
         navigate('/signup');
       }
@@ -83,6 +83,17 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
     const dayIndex = date.getDay();
     return days[dayIndex];
   };
+
+  const limitElements = (elements: string[], limit: number) => {
+    if (elements.length > limit) {
+      return elements.slice(0, limit).join(', ') + '...';
+    } else {
+      return elements.join(', ');
+    }
+  };
+
+  const outfit = getWeatherOutfit(weatherData.main.temp).split(', ');
+  const displayedOutfit = limitElements(outfit, 4);
 
   return (
     <WeatherDisplayContainer>
@@ -132,13 +143,13 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
             {/* {weatherData.rain && <p>Rain {weatherData.rain['1h']}mm</p>}
             {weatherData.snow && <p>Snow {weatherData.snow['1h']}mm</p>} */}
             <div>
-              <p>
+              {/* <p>
                 <GiClothes onClick={ClothesClick} />
               </p>
               <p>
                 <AiOutlineLogin onClick={SignupClick} />
-              </p>
-              {/* <p> {getWeatherOutfit(weatherData.main.temp)}</p> */}
+              </p> */}
+              <p> {displayedOutfit}</p>
             </div>
           </WeatherDetails>
         </WeatherDataContainer>
