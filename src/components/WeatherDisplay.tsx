@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import WeatherData from '../types/WeatherData';
 import {
   WeatherDataContainer,
@@ -30,23 +30,26 @@ interface WeatherDisplayProps {
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date();
-  const [cityName, setCityName] = useState<string>(''); // 도시 이름을 입력받을 상태
+  const [cityName, setCityName] = useState<string>('');
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const data = await fetchWeatherData(cityName || '서울');
-      setWeatherData(data);
-    } catch (error) {
-      console.error('날씨 정보를 불러올 수 없습니다.', error);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        const data = await fetchWeatherData(cityName || '서울');
+        setWeatherData(data);
+      } catch (error) {
+        console.error('날씨 정보를 불러올 수 없습니다.', error);
+      }
+    },
+    [cityName, setWeatherData]
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(e.target.value);
-  };
+  }, []);
 
   const ClothesClick = () => {
     onAuthStateChanged(auth, (user: User | null) => {
