@@ -46,8 +46,8 @@ export function getWeatherOutfit(temp: number): string {
   } else if (temp >= 9 && temp <= 11) {
     return '재킷, 야상, 점퍼, 트렌치 코트, 니트, 청바지, 면바지, 검은색 스타킹, 기모 바지, 레이어드';
   } else if (temp >= 5 && temp <= 8) {
-    return '코트, 울 코트, 가죽 재킷, 플리스, 내복, 니트, 레깅스, 청바지, 두꺼운 바지, 스카프, 기모';
+    return '코트, 가죽 재킷, 플리스, 내복, 니트, 레깅스, 청바지, 두꺼운 바지, 스카프, 기모';
   } else {
-    return '패딩, 두꺼운 코트, 누빔, 내복, 목도리, 장갑, 기모, 방한용품';
+    return '패딩, 코트, 누빔, 내복, 목도리, 장갑, 기모, 방한용품';
   }
 }
