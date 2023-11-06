@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, getDocs, query } from 'firebase/firestore';
-import { db } from '../api/firebase';
+import { fetchClothesData } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
 } from './ClothesListStyles';
 
-interface ClothesItem {
+export interface ClothesItem {
   id: string;
   name: string;
   category: string;
@@ -18,25 +17,16 @@ const ClothesList: React.FC = () => {
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
 
   useEffect(() => {
-    const fetchClothesData = async () => {
+    const fetchData = async () => {
       try {
-        const clothesCollection = collection(db, 'clothes');
-        const clothesQuery = query(clothesCollection);
-
-        const querySnapshot = await getDocs(clothesQuery);
-
-        const data: ClothesItem[] = [];
-        querySnapshot.forEach((doc) => {
-          data.push({ id: doc.id, ...doc.data() } as ClothesItem);
-        });
-
+        const data = await fetchClothesData();
         setClothesData(data);
       } catch (error) {
         console.error('데이터 가져오기 중 에러 발생:', error);
       }
     };
 
-    fetchClothesData();
+    fetchData();
   }, []);
 
   return (

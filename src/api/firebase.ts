@@ -19,7 +19,7 @@ import {
   doc,
   addDoc,
 } from 'firebase/firestore';
-
+import { ClothesItem } from '../pages/ClothesList';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -60,6 +60,8 @@ export async function signOutUser() {
   }
 }
 
+//구글 로그인
+
 export async function signInWithGoogle(): Promise<UserCredential> {
   try {
     const provider = new GoogleAuthProvider();
@@ -71,15 +73,9 @@ export async function signInWithGoogle(): Promise<UserCredential> {
   }
 }
 
-interface ClothesItem {
-  id: string;
-  name: string;
-  category: string;
-  imageURL: string;
-  description: string;
-}
+//db 가져오기
 
-async function fetchClothesData(): Promise<ClothesItem[]> {
+export async function fetchClothesData(): Promise<ClothesItem[]> {
   const clothesCollection = collection(db, 'clothes');
   const clothesQuery = query(clothesCollection);
   const querySnapshot = await getDocs(clothesQuery);
