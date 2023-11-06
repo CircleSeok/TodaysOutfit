@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, getDocs, query } from 'firebase/firestore'; // Firebase Firestore 관련 함수 import
-import { db } from '../api/firebase'; // Firebase Firestore 설정에 따라 수정
+import { getFirestore, collection, getDocs, query } from 'firebase/firestore';
+import { db } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
 } from './ClothesListStyles';
 
-// ClothesItem 타입을 정의
 interface ClothesItem {
   id: string;
   name: string;

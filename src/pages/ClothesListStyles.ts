@@ -10,7 +10,7 @@ export const ClothesListContainer = styled.div`
 
 export const ClothesItemContainer = styled.div`
   width: calc(25% - 16px);
-
   list-style: none;
   text-align: center;
+  border: 1px solid blue;
 `;
