@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from '../pages/SignUp';
 import Main from '../pages/Main';
-import Clothes from '../pages/Clothes';
+import Clothes from '../pages/ClothesList';
 
 function Router() {
   return (

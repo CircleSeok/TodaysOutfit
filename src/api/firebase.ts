@@ -11,7 +11,15 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import { getDatabase, ref, set, get, DataSnapshot } from 'firebase/database';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  doc,
+  addDoc,
+} from 'firebase/firestore';
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -23,9 +31,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const auth = getAuth(app);
-const database = getDatabase(app);
+export const db = getFirestore(app);
 
 //회원가입
 export async function createUser(
@@ -64,37 +71,23 @@ export async function signInWithGoogle(): Promise<UserCredential> {
   }
 }
 
-// Firebase 데이터베이스에서 데이터 쓰기
-export async function writeToDatabase(
-  dataPath: string,
-  data: any
-): Promise<void> {
-  const dataRef = ref(database, dataPath);
-
-  try {
-    await set(dataRef, data);
-    console.log('데이터가 Firebase 데이터베이스에 성공적으로 쓰였습니다.');
-  } catch (error) {
-    console.error('데이터 쓰기 중 에러 발생:', error);
-    throw error;
-  }
+interface ClothesItem {
+  id: string;
+  name: string;
+  category: string;
+  imageURL: string;
+  description: string;
 }
 
-// Firebase 데이터베이스에서 데이터 읽기
-export async function readFromDatabase(
-  dataPath: string
-): Promise<string | null> {
-  const dataRef = ref(database, dataPath);
+async function fetchClothesData(): Promise<ClothesItem[]> {
+  const clothesCollection = collection(db, 'clothes');
+  const clothesQuery = query(clothesCollection);
+  const querySnapshot = await getDocs(clothesQuery);
 
-  try {
-    const snapshot: DataSnapshot = await get(dataRef);
-    if (snapshot.exists()) {
-      return snapshot.val() as string;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error('데이터 읽기 중 에러 발생:', error);
-    throw error;
-  }
+  const clothesData: ClothesItem[] = [];
+  querySnapshot.forEach((doc) => {
+    clothesData.push(doc.data() as ClothesItem);
+  });
+
+  return clothesData;
 }
