@@ -3,6 +3,7 @@ import { fetchClothesData } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
+  ClothesWrap,
 } from './ClothesListStyles';
 
 export interface ClothesItem {
@@ -32,18 +33,18 @@ const ClothesList: React.FC = () => {
   return (
     <ClothesListContainer>
       <h2>옷 목록</h2>
-      <ul>
+      <ClothesWrap>
         {clothesData.map((item, index) => (
           <ClothesItemContainer key={index}>
             <img
               src={item.imageURL}
               alt={item.name}
-              style={{ width: '100%', height: 'auto' }}
+              style={{ height: 'auto', maxWidth: '100%' }}
             />
             <h3>{item.name}</h3>
           </ClothesItemContainer>
         ))}
-      </ul>
+      </ClothesWrap>
     </ClothesListContainer>
   );
 };

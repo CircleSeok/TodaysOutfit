@@ -5,7 +5,7 @@ export const WeatherDataContainer = styled.div`
   flex: 3;
   text-align: left;
   padding: 20px;
-  height: 96%;
+  height: 100%;
   color: white;
   font-size: 25px;
   display: flex;
@@ -97,5 +97,5 @@ export const WeatherDisplayContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 1910px;
+  width: 1903px;
 `;
