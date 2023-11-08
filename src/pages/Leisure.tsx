@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { fetchLeisureData } from '../api/firebase';
+import {
+  LeisureItemContainer,
+  LeisureListContainer,
+  LeisureWrap,
+} from './LeisureListStyles';
 
 export interface LeisureItem {
   id: string;
@@ -25,20 +30,20 @@ export default function Leisure() {
   }, []);
 
   return (
-    <div>
+    <LeisureListContainer>
       <h2>여가활동 추천</h2>
-      <div>
+      <LeisureWrap>
         {leisureData.map((item, index) => (
-          <div key={index}>
+          <LeisureItemContainer key={index}>
             <img
               src={item.imageURL}
               alt={item.name}
               style={{ height: 'auto', maxWidth: '100%' }}
             />
             <h3>{item.name}</h3>
-          </div>
+          </LeisureItemContainer>
         ))}
-      </div>
-    </div>
+      </LeisureWrap>
+    </LeisureListContainer>
   );
 }
