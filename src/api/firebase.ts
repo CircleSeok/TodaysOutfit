@@ -20,6 +20,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { ClothesItem } from '../pages/ClothesList';
+import { LeisureItem } from '../pages/Leisure';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -86,4 +87,17 @@ export async function fetchClothesData(): Promise<ClothesItem[]> {
   });
 
   return clothesData;
+}
+
+export async function fetchLeisureData(): Promise<LeisureItem[]> {
+  const LeisureCollection = collection(db, 'leisure');
+  const leisureQuery = query(LeisureCollection);
+  const querySnapshot = await getDocs(leisureQuery);
+
+  const leisureData: LeisureItem[] = [];
+  querySnapshot.forEach((doc) => {
+    leisureData.push(doc.data() as LeisureItem);
+  });
+
+  return leisureData;
 }

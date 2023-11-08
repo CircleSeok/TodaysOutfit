@@ -1,7 +1,7 @@
 import React from 'react';
 import Weather from '../components/Weather';
 import Clothes from './ClothesList';
-import Trip from './Trip';
+import Leisure from './Leisure';
 import styled from 'styled-components';
 
 const MainContainer = styled.div`
@@ -15,7 +15,7 @@ export default function Main() {
     <MainContainer>
       <Weather />
       <Clothes />
-      <Trip />
+      <Leisure />
     </MainContainer>
   );
 }
