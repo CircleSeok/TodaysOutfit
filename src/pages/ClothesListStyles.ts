@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ClothesListContainer = styled.div`
   width: 1080px;
+  height: 100vh;
   border: 1px solid red;
 `;
 

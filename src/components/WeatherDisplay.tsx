@@ -27,18 +27,19 @@ interface WeatherDisplayProps {
   weatherData: WeatherData | null;
 }
 
-const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
+const WeatherDisplay: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date();
   const [cityName, setCityName] = useState<string>('');
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const navigate = useNavigate();
+  const weatherData = useWeatherStore((state) => state.weatherData);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        const data = await fetchWeatherData(cityName || '서울');
+        const data = await fetchWeatherData(cityName);
         setWeatherData(data);
       } catch (error) {
         console.error('날씨 정보를 불러올 수 없습니다.', error);
@@ -50,16 +51,6 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(e.target.value);
   }, []);
-
-  const ClothesClick = () => {
-    onAuthStateChanged(auth, (user: User | null) => {
-      if (user) {
-        navigate('/clothes');
-      } else {
-        navigate('/signup');
-      }
-    });
-  };
 
   const SignupClick = () => {
     navigate('/signup');
@@ -95,7 +86,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
     }
   };
 
-  const outfit = getWeatherOutfit(weatherData.main.temp).split(', ');
+  const outfit = getWeatherOutfit(weatherData.main.temp);
   const displayedOutfit = limitElements(outfit, 4);
 
   return (
@@ -143,15 +134,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
                 <p>{weatherData.wind.speed} m/s</p>
               </div>
             )}
-            {/* {weatherData.rain && <p>Rain {weatherData.rain['1h']}mm</p>}
-            {weatherData.snow && <p>Snow {weatherData.snow['1h']}mm</p>} */}
             <div>
-              {/* <p>
-                <GiClothes onClick={ClothesClick} />
-              </p>
-              <p>
-                <AiOutlineLogin onClick={SignupClick} />
-              </p> */}
               <p> {displayedOutfit}</p>
             </div>
           </WeatherDetails>

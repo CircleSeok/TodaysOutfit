@@ -18,6 +18,7 @@ import {
   query,
   doc,
   addDoc,
+  where,
 } from 'firebase/firestore';
 import { ClothesItem } from '../pages/ClothesList';
 import { LeisureItem } from '../pages/Leisure';
@@ -76,9 +77,14 @@ export async function signInWithGoogle(): Promise<UserCredential> {
 
 //db 가져오기
 
-export async function fetchClothesData(): Promise<ClothesItem[]> {
+export async function fetchClothesData(
+  weatherCategories: string[]
+): Promise<ClothesItem[]> {
   const clothesCollection = collection(db, 'clothes');
-  const clothesQuery = query(clothesCollection);
+  const clothesQuery = query(
+    clothesCollection,
+    where('category', 'in', weatherCategories)
+  );
   const querySnapshot = await getDocs(clothesQuery);
 
   const clothesData: ClothesItem[] = [];

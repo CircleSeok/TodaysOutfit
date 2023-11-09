@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import useWeatherStore from '../store/WeatherStore';
-import Navbar from './Navbar';
 import WeatherData from '../types/WeatherData';
 import WeatherDisplay from './WeatherDisplay';
 import { fetchWeatherData } from '../api/api';
 export default function Weather() {
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
-  const weatherData = useWeatherStore((state) => state.weatherData);
 
   useEffect(() => {
     async function fetchData(cityName: string) {
@@ -23,8 +21,7 @@ export default function Weather() {
 
   return (
     <div>
-      {/* <Navbar /> */}
-      <WeatherDisplay weatherData={weatherData} />
+      <WeatherDisplay />
     </div>
   );
 }
