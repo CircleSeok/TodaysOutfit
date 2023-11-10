@@ -5,6 +5,8 @@ import {
   LeisureListContainer,
   LeisureWrap,
 } from './LeisureListStyles';
+import useWeatherStore from '../store/WeatherStore';
+import { getSeason } from '../components/WeatherUtils';
 
 export interface LeisureItem {
   id: string;
@@ -17,17 +19,22 @@ export interface LeisureItem {
 export default function Leisure() {
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
 
+  const weatherData = useWeatherStore((state) => state.weatherData);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchLeisureData();
-        setLeisureData(data);
+        if (weatherData) {
+          const leisurecategory = getSeason(weatherData.main.temp);
+          const data = await fetchLeisureData(leisurecategory);
+          setLeisureData(data);
+        }
       } catch (error) {
         console.log('데이터 가져오기 중 에러 발생:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [weatherData]);
 
   return (
     <LeisureListContainer>

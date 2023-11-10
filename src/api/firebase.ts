@@ -95,9 +95,14 @@ export async function fetchClothesData(
   return clothesData;
 }
 
-export async function fetchLeisureData(): Promise<LeisureItem[]> {
+export async function fetchLeisureData(
+  leisureCategories: string[]
+): Promise<LeisureItem[]> {
   const LeisureCollection = collection(db, 'leisure');
-  const leisureQuery = query(LeisureCollection);
+  const leisureQuery = query(
+    LeisureCollection,
+    where('category', 'in', leisureCategories)
+  );
   const querySnapshot = await getDocs(leisureQuery);
 
   const leisureData: LeisureItem[] = [];

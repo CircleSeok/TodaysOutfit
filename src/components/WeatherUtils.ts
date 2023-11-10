@@ -60,3 +60,17 @@ export function getWeatherOutfit(temp: number): string[] {
     return ['패딩', '코트', '목도리', '방한용품'];
   }
 }
+
+export function getSeason(temp: number): string[] {
+  if (temp >= 0 && temp <= 15) {
+    return ['spring'];
+  } else if (temp >= 15 && temp <= 40) {
+    return ['summer'];
+  } else if (temp >= 0 && temp <= 20) {
+    return ['fall'];
+  } else if (temp >= -30 && temp <= 5) {
+    return ['winter'];
+  } else {
+    return ['알 수 없음'];
+  }
+}
