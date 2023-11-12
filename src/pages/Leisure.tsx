@@ -26,7 +26,9 @@ export default function Leisure() {
       try {
         if (weatherData) {
           const leisurecategory = getSeason(weatherData.main.temp);
+          console.log('리턴받는 배열', leisurecategory);
           const data = await fetchLeisureData(leisurecategory);
+          console.log(data);
           setLeisureData(data);
         }
       } catch (error) {
@@ -39,6 +41,7 @@ export default function Leisure() {
   return (
     <LeisureListContainer>
       <h2>여가활동 추천</h2>
+      <p>{weatherData?.main.temp}</p>
       <LeisureWrap>
         {leisureData.map((item, index) => (
           <LeisureItemContainer key={index}>
