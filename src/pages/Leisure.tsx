@@ -43,12 +43,16 @@ export default function Leisure() {
       <h2>여가활동 추천</h2>
       <p>{weatherData?.main.temp}</p>
       <LeisureWrap>
-        {leisureData.map((item, index) => (
+        {leisureData.slice(0, 8).map((item, index) => (
           <LeisureItemContainer key={index}>
             <img
               src={item.imageURL}
               alt={item.name}
-              style={{ height: 'auto', maxWidth: '100%' }}
+              style={{
+                height: '100%',
+                width: '100%',
+                objectFit: 'cover',
+              }}
             />
             <h3>{item.name}</h3>
           </LeisureItemContainer>

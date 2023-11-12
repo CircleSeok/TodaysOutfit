@@ -43,12 +43,12 @@ const ClothesList: React.FC = () => {
       <h2>옷 목록</h2>
       <p>{weatherData?.main.temp}</p>
       <ClothesWrap>
-        {clothesData.map((item, index) => (
+        {clothesData.slice(0, 8).map((item, index) => (
           <ClothesItemContainer key={index}>
             <img
               src={item.imageURL}
               alt={item.name}
-              style={{ height: 'auto', maxWidth: '100%' }}
+              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
             />
             <h3>{item.name}</h3>
           </ClothesItemContainer>

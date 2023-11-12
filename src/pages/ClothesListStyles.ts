@@ -8,7 +8,8 @@ export const ClothesListContainer = styled.div`
 
 export const ClothesItemContainer = styled.div`
   flex-basis: 25%;
-  padding: 10px;
+  padding: 45px;
+  border: 1px solid green;
 `;
 
 export const ClothesWrap = styled.div`
