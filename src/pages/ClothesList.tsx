@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchClothesData } from '../api/firebase';
+import { auth, fetchClothesData } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
@@ -43,7 +43,12 @@ const ClothesList: React.FC = () => {
   }, [weatherData]);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    const currentuser = auth.currentUser;
+    if (currentuser) {
+      navigate('/clothesDetail');
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -63,6 +68,7 @@ const ClothesList: React.FC = () => {
         ))}
       </ClothesWrap>
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
+      <button>로그아웃</button>
       {isModalOpen && <SignUp />}
     </ClothesListContainer>
   );

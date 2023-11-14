@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchLeisureData } from '../api/firebase';
+import { auth, fetchLeisureData } from '../api/firebase';
 import {
   LeisureItemContainer,
   LeisureListContainer,
@@ -8,6 +8,7 @@ import {
 } from './LeisureListStyles';
 import useWeatherStore from '../store/WeatherStore';
 import { getSeason } from '../components/WeatherUtils';
+import { useNavigate } from 'react-router-dom';
 
 export interface LeisureItem {
   id: string;
@@ -19,7 +20,8 @@ export interface LeisureItem {
 
 export default function Leisure() {
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
 
   useEffect(() => {
@@ -38,6 +40,15 @@ export default function Leisure() {
     };
     fetchData();
   }, [weatherData]);
+
+  const openModal = () => {
+    const currentuser = auth.currentUser;
+    if (currentuser) {
+      navigate('/liesureDetail');
+    } else {
+      setIsModalOpen(true);
+    }
+  };
 
   return (
     <LeisureListContainer>
@@ -59,7 +70,7 @@ export default function Leisure() {
           </LeisureItemContainer>
         ))}
       </LeisureWrap>
-      <MoreButton>더 많은 레저 보기</MoreButton>
+      <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
     </LeisureListContainer>
   );
 }
