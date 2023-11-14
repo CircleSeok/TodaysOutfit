@@ -4,6 +4,7 @@ import {
   LeisureItemContainer,
   LeisureListContainer,
   LeisureWrap,
+  MoreButton,
 } from './LeisureListStyles';
 import useWeatherStore from '../store/WeatherStore';
 import { getSeason } from '../components/WeatherUtils';
@@ -58,6 +59,7 @@ export default function Leisure() {
           </LeisureItemContainer>
         ))}
       </LeisureWrap>
+      <MoreButton>더 많은 레저 보기</MoreButton>
     </LeisureListContainer>
   );
 }

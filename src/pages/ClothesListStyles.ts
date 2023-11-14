@@ -4,6 +4,9 @@ export const ClothesListContainer = styled.div`
   width: 1080px;
   height: 100vh;
   border: 1px solid red;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const ClothesItemContainer = styled.div`
@@ -15,4 +18,10 @@ export const ClothesItemContainer = styled.div`
 export const ClothesWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
+`;
+
+export const MoreButton = styled.button`
+  width: 200px;
+  height: 60px;
+  margin-top: 50px;
 `;

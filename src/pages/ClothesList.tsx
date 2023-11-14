@@ -4,10 +4,12 @@ import {
   ClothesItemContainer,
   ClothesListContainer,
   ClothesWrap,
+  MoreButton,
 } from './ClothesListStyles';
 import useWeatherStore from '../store/WeatherStore';
 import { getWeatherOutfit } from '../components/WeatherUtils';
-
+import { useNavigate } from 'react-router-dom';
+import SignUp from './SignUp';
 export interface ClothesItem {
   id: string;
   name: string;
@@ -18,6 +20,8 @@ export interface ClothesItem {
 
 const ClothesList: React.FC = () => {
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const weatherData = useWeatherStore((state) => state.weatherData);
 
@@ -38,6 +42,10 @@ const ClothesList: React.FC = () => {
     fetchData();
   }, [weatherData]);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <ClothesListContainer>
       <h2>옷 목록</h2>
@@ -54,6 +62,8 @@ const ClothesList: React.FC = () => {
           </ClothesItemContainer>
         ))}
       </ClothesWrap>
+      <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
+      {isModalOpen && <SignUp />}
     </ClothesListContainer>
   );
 };

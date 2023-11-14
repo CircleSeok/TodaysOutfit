@@ -32,6 +32,7 @@ export default function SignUp() {
       signIn(email, password)
         .then(() => {
           console.log('로그인 성공');
+
           navigate('/');
         })
         .catch((error) => {
@@ -68,36 +69,28 @@ export default function SignUp() {
       <ModalContent>
         <Container>
           <Title>{buttonText}</Title>
-          {user ? (
-            <div>
-              <p>이미 로그인되어 있습니다.</p>
-              <button onClick={() => navigate('/clothesinfo')}>
-                Clothes Info 페이지로 이동
-              </button>
-            </div>
-          ) : (
-            <FormContainer onSubmit={handleAuth}>
-              <input
-                type='email'
-                placeholder='Email'
-                value={email}
-                onChange={handleEmailChange}
-              />
-              <input
-                type='password'
-                placeholder='Password'
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              <button type='submit'>{buttonText}</button>
-              <button onClick={signInWithGoogle}>구글 아이디로 로그인</button>
-              <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
-                {isLogin
-                  ? '회원이 아니신가요? 회원가입'
-                  : '이미 회원이신가요? 로그인'}
-              </p>
-            </FormContainer>
-          )}
+
+          <FormContainer onSubmit={handleAuth}>
+            <input
+              type='email'
+              placeholder='Email'
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <button type='submit'>{buttonText}</button>
+            <button onClick={signInWithGoogle}>구글 아이디로 로그인</button>
+            <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
+              {isLogin
+                ? '회원이 아니신가요? 회원가입'
+                : '이미 회원이신가요? 로그인'}
+            </p>
+          </FormContainer>
         </Container>
       </ModalContent>
     </ModalContainer>
