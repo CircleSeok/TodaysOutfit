@@ -10,6 +10,7 @@ import useWeatherStore from '../store/WeatherStore';
 import { getWeatherOutfit } from '../components/WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import SignUp from './SignUp';
+import ModalStore from '../store/ModalStore';
 export interface ClothesItem {
   id: string;
   name: string;
@@ -20,7 +21,8 @@ export interface ClothesItem {
 
 const ClothesList: React.FC = () => {
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isModalOpen = ModalStore((state) => state.isModalOpen);
+  const setModalOpen = ModalStore((state) => state.setIsModalOpen);
   const navigate = useNavigate();
 
   const weatherData = useWeatherStore((state) => state.weatherData);
@@ -47,7 +49,7 @@ const ClothesList: React.FC = () => {
     if (currentuser) {
       navigate('/clothesDetail');
     } else {
-      setIsModalOpen(true);
+      setModalOpen(true);
     }
   };
 
@@ -57,10 +59,6 @@ const ClothesList: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -81,7 +79,7 @@ const ClothesList: React.FC = () => {
       </ClothesWrap>
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
       <button onClick={handleLogout}>로그아웃</button>
-      {isModalOpen && <SignUp handleClose={setIsModalOpen} />}
+      {isModalOpen && <SignUp />}
     </ClothesListContainer>
   );
 };

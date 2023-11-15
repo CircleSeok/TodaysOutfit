@@ -10,17 +10,15 @@ import {
   Title,
   CloseButton,
 } from './SignUpStyles';
+import ModalStore from '../store/ModalStore';
 
-interface SignUpProps {
-  handleClose: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SignUp: React.FC<SignUpProps> = ({ handleClose }) => {
+const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
+  const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser: User | null) => {
@@ -68,7 +66,7 @@ const SignUp: React.FC<SignUpProps> = ({ handleClose }) => {
   const buttonText = isLogin ? '로그인' : '회원가입';
 
   const handleCloseButtonClick = () => {
-    handleClose(false);
+    setModalOpen(false);
   };
 
   return (
