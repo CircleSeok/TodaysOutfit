@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, fetchClothesData } from '../api/firebase';
+import { auth, fetchClothesData, signOutUser } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
@@ -51,6 +51,18 @@ const ClothesList: React.FC = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <ClothesListContainer>
       <h2>옷 목록</h2>
@@ -68,8 +80,8 @@ const ClothesList: React.FC = () => {
         ))}
       </ClothesWrap>
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
-      <button>로그아웃</button>
-      {isModalOpen && <SignUp />}
+      <button onClick={handleLogout}>로그아웃</button>
+      {isModalOpen && <SignUp handleClose={setIsModalOpen} />}
     </ClothesListContainer>
   );
 };

@@ -77,3 +77,12 @@ export const Title = styled.div`
   margin-bottom: 109px;
   font-size: 40px;
 `;
+
+export const CloseButton = styled.div`
+  position: absolute;
+  top: 60px;
+  right: 670px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #4a90e2;
+`;

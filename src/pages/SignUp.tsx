@@ -8,14 +8,18 @@ import {
   Container,
   FormContainer,
   Title,
+  CloseButton,
 } from './SignUpStyles';
 
-export default function SignUp() {
+interface SignUpProps {
+  handleClose: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SignUp: React.FC<SignUpProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [isLogin, setIsLogin] = useState(true);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +36,6 @@ export default function SignUp() {
       signIn(email, password)
         .then(() => {
           console.log('로그인 성공');
-
           navigate('/');
         })
         .catch((error) => {
@@ -64,10 +67,15 @@ export default function SignUp() {
 
   const buttonText = isLogin ? '로그인' : '회원가입';
 
+  const handleCloseButtonClick = () => {
+    handleClose(false);
+  };
+
   return (
     <ModalContainer>
       <ModalContent>
         <Container>
+          <CloseButton onClick={handleCloseButtonClick}>닫기</CloseButton>
           <Title>{buttonText}</Title>
 
           <FormContainer onSubmit={handleAuth}>
@@ -95,4 +103,6 @@ export default function SignUp() {
       </ModalContent>
     </ModalContainer>
   );
-}
+};
+
+export default SignUp;
