@@ -62,13 +62,13 @@ export function getWeatherOutfit(temp: number): string[] {
 }
 
 export function getSeason(temp: number): string[] {
-  if (temp >= -30 && temp < 7) {
+  if (temp >= -30 && temp < 9) {
     return ['winter'];
-  } else if (temp >= 7 && temp < 15) {
+  } else if (temp >= 9 && temp < 17) {
     return ['fall'];
-  } else if (temp >= 15 && temp < 20) {
+  } else if (temp >= 17 && temp < 23) {
     return ['spring'];
-  } else if (temp >= 20 && temp < 40) {
+  } else if (temp >= 23 && temp < 40) {
     return ['summer'];
   } else {
     return ['알 수 없음'];

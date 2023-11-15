@@ -79,7 +79,7 @@ const ClothesList: React.FC = () => {
       </ClothesWrap>
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
       <button onClick={handleLogout}>로그아웃</button>
-      {isModalOpen && <SignUp />}
+      {isModalOpen && <SignUp redirectPath='/clothesList' />}
     </ClothesListContainer>
   );
 };

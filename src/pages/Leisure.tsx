@@ -9,6 +9,8 @@ import {
 import useWeatherStore from '../store/WeatherStore';
 import { getSeason } from '../components/WeatherUtils';
 import { useNavigate } from 'react-router-dom';
+import ModalStore from '../store/ModalStore';
+import SignUp from './SignUp';
 
 export interface LeisureItem {
   id: string;
@@ -20,7 +22,8 @@ export interface LeisureItem {
 
 export default function Leisure() {
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isModalOpen = ModalStore((state) => state.isModalOpen);
+  const setModalOpen = ModalStore((state) => state.setIsModalOpen);
   const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
 
@@ -44,9 +47,9 @@ export default function Leisure() {
   const openModal = () => {
     const currentuser = auth.currentUser;
     if (currentuser) {
-      navigate('/liesureDetail');
+      navigate('/leisuredetail');
     } else {
-      setIsModalOpen(true);
+      setModalOpen(true);
     }
   };
 
@@ -71,6 +74,7 @@ export default function Leisure() {
         ))}
       </LeisureWrap>
       <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
+      {isModalOpen && <SignUp redirectPath='/leisure' />}
     </LeisureListContainer>
   );
 }

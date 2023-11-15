@@ -12,7 +12,11 @@ import {
 } from './SignUpStyles';
 import ModalStore from '../store/ModalStore';
 
-const SignUp: React.FC = () => {
+interface SignUpProps {
+  redirectPath: string;
+}
+
+const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
@@ -34,7 +38,11 @@ const SignUp: React.FC = () => {
       signIn(email, password)
         .then(() => {
           console.log('로그인 성공');
-          navigate('/');
+          if (redirectPath === '/clothesList') {
+            navigate('/clothesdetail');
+          } else if (redirectPath === '/leisure') {
+            navigate('/leisuredetail');
+          }
         })
         .catch((error) => {
           console.log(error.message);
@@ -43,7 +51,11 @@ const SignUp: React.FC = () => {
       createUser(email, password)
         .then(() => {
           console.log('회원가입 성공');
-          navigate('/');
+          if (redirectPath === '/clothes') {
+            navigate('/clothesdetail');
+          } else if (redirectPath === '/leisure') {
+            navigate('/leisuredetail');
+          }
         })
         .catch((error) => {
           console.log(error.message);
@@ -90,7 +102,9 @@ const SignUp: React.FC = () => {
               onChange={handlePasswordChange}
             />
             <button type='submit'>{buttonText}</button>
-            <button onClick={signInWithGoogle}>구글 아이디로 로그인</button>
+            <button onClick={signInWithGoogle}>
+              구글 아이디로 {buttonText}
+            </button>
             <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
               {isLogin
                 ? '회원이 아니신가요? 회원가입'
