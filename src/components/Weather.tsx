@@ -20,7 +20,7 @@ export default function Weather() {
   }, [setWeatherData]);
 
   return (
-    <div>
+    <div id='weather'>
       <WeatherDisplay />
     </div>
   );

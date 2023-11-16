@@ -11,6 +11,7 @@ import { getWeatherOutfit } from '../components/WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import SignUp from './SignUp';
 import ModalStore from '../store/ModalStore';
+import { Link, scroller } from 'react-scroll';
 export interface ClothesItem {
   id: string;
   name: string;
@@ -27,6 +28,22 @@ const ClothesList: React.FC = () => {
 
   const weatherData = useWeatherStore((state) => state.weatherData);
 
+  const openLeisureSection = () => {
+    scroller.scrollTo('leisure', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
+  };
+
+  const backToPreviousSection = () => {
+    scroller.scrollTo('weather', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,8 +56,8 @@ const ClothesList: React.FC = () => {
         console.error('데이터 가져오기 중 에러 발생:', error);
       }
     };
-    console.log(weatherData);
-    console.log(clothesData);
+    // console.log(weatherData);
+    // console.log(clothesData);
     fetchData();
   }, [weatherData]);
 
@@ -78,6 +95,8 @@ const ClothesList: React.FC = () => {
         ))}
       </ClothesWrap>
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
+      <button onClick={openLeisureSection}>다음 페이지</button>
+      <button onClick={backToPreviousSection}>이전 페이지</button>
       <button onClick={handleLogout}>로그아웃</button>
       {isModalOpen && <SignUp redirectPath='/clothesList' />}
     </ClothesListContainer>

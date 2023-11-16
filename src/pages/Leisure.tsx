@@ -11,6 +11,7 @@ import { getSeason } from '../components/WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import ModalStore from '../store/ModalStore';
 import SignUp from './SignUp';
+import { scroller } from 'react-scroll';
 
 export interface LeisureItem {
   id: string;
@@ -32,9 +33,9 @@ export default function Leisure() {
       try {
         if (weatherData) {
           const leisurecategory = getSeason(weatherData.main.temp);
-          console.log('리턴받는 배열', leisurecategory);
+          // console.log('리턴받는 배열', leisurecategory);
           const data = await fetchLeisureData(leisurecategory);
-          console.log(data);
+          // console.log(data);
           setLeisureData(data);
         }
       } catch (error) {
@@ -51,6 +52,22 @@ export default function Leisure() {
     } else {
       setModalOpen(true);
     }
+  };
+
+  const openWeatherSection = () => {
+    scroller.scrollTo('weather', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
+  };
+
+  const backToPreviousSection = () => {
+    scroller.scrollTo('clothes', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
   };
 
   return (
@@ -74,6 +91,8 @@ export default function Leisure() {
         ))}
       </LeisureWrap>
       <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
+      <button onClick={openWeatherSection}>weather로</button>
+      <button onClick={backToPreviousSection}>이전 화면으로</button>
       {isModalOpen && <SignUp redirectPath='/leisure' />}
     </LeisureListContainer>
   );

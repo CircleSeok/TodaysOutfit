@@ -22,7 +22,7 @@ import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../api/firebase';
-
+import { scroller } from 'react-scroll';
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
 }
@@ -89,6 +89,14 @@ const WeatherDisplay: React.FC = () => {
   const outfit = getWeatherOutfit(weatherData.main.temp);
   const displayedOutfit = limitElements(outfit, 4);
 
+  const handleClothesButtonClick = () => {
+    scroller.scrollTo('clothes', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
+  };
+
   return (
     <WeatherDisplayContainer>
       <WeatherBackground backgroundImage={backgroundImage}>
@@ -97,6 +105,9 @@ const WeatherDisplay: React.FC = () => {
             {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
             {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
           </p>
+          <button onClick={handleClothesButtonClick}>
+            Go to Clothes Section
+          </button>
           <LeftBottomContainer>
             <CityandTemp>
               <h2>{weatherData.main.temp}°C</h2>
