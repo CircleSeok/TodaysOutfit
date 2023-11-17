@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../api/firebase';
 import { scroller } from 'react-scroll';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
 }
@@ -105,9 +106,9 @@ const WeatherDisplay: React.FC = () => {
             {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
             {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
           </p>
-          <button onClick={handleClothesButtonClick}>
-            Go to Clothes Section
-          </button>
+
+          <FaAngleDoubleDown onClick={handleClothesButtonClick} />
+
           <LeftBottomContainer>
             <CityandTemp>
               <h2>{weatherData.main.temp}°C</h2>

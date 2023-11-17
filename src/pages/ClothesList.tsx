@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import SignUp from './SignUp';
 import ModalStore from '../store/ModalStore';
 import { Link, scroller } from 'react-scroll';
+import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa';
 export interface ClothesItem {
   id: string;
   name: string;
@@ -80,6 +81,7 @@ const ClothesList: React.FC = () => {
 
   return (
     <ClothesListContainer>
+      <FaAngleDoubleUp onClick={backToPreviousSection} />
       <h2>옷 목록</h2>
       <p>{weatherData?.main.temp}</p>
       <ClothesWrap>
@@ -94,10 +96,11 @@ const ClothesList: React.FC = () => {
           </ClothesItemContainer>
         ))}
       </ClothesWrap>
-      <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
-      <button onClick={openLeisureSection}>다음 페이지</button>
-      <button onClick={backToPreviousSection}>이전 페이지</button>
       <button onClick={handleLogout}>로그아웃</button>
+      <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
+
+      <FaAngleDoubleDown onClick={openLeisureSection} />
+
       {isModalOpen && <SignUp redirectPath='/clothesList' />}
     </ClothesListContainer>
   );

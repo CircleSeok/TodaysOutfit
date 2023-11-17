@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import ModalStore from '../store/ModalStore';
 import SignUp from './SignUp';
 import { scroller } from 'react-scroll';
-
+import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa';
 export interface LeisureItem {
   id: string;
   name: string;
@@ -72,6 +72,7 @@ export default function Leisure() {
 
   return (
     <LeisureListContainer>
+      <FaAngleDoubleUp onClick={backToPreviousSection} />
       <h2>여가활동 추천</h2>
       <p>{weatherData?.main.temp}</p>
       <LeisureWrap>
@@ -91,8 +92,9 @@ export default function Leisure() {
         ))}
       </LeisureWrap>
       <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
-      <button onClick={openWeatherSection}>weather로</button>
-      <button onClick={backToPreviousSection}>이전 화면으로</button>
+      {/* <button onClick={openWeatherSection}>weather로</button>
+      <button onClick={backToPreviousSection}>이전 화면으로</button> */}
+      <FaAngleDoubleDown onClick={openWeatherSection} />
       {isModalOpen && <SignUp redirectPath='/leisure' />}
     </LeisureListContainer>
   );
