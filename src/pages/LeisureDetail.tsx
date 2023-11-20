@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { fetchLeisureData } from '../api/firebase';
+import { translateCategory } from '../components/WeatherUtils';
 
 interface LeisureItem {
   id: string;
@@ -9,78 +11,118 @@ interface LeisureItem {
   description: string;
 }
 
+const Container = styled.div`
+  width: 1080px;
+  /* height: 100vh; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+  margin: 0 auto;
+`;
+
+const ButtonsContainer = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const ItemWrapper = styled.div`
+  width: calc(25% - 10px);
+  margin-bottom: 20px;
+  img {
+    height: 278px;
+    width: 278px;
+    object-fit: cover;
+  }
+`;
+
 const LeisureDetail: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let data: LeisureItem[] = [];
+  const fetchMoreData = async () => {
+    try {
+      let newData: LeisureItem[] = [];
 
-        if (selectedCategory === '전체') {
-          const allData = await fetchLeisureData([
-            'spring',
-            'summer',
-            'fall',
-            'winter',
-          ]);
-          data = allData.flat();
-        } else {
-          const translatedCategory = translateCategory(selectedCategory);
-          data = await fetchLeisureData([translatedCategory]);
-        }
-
-        setLeisureData(data);
-      } catch (error) {
-        console.error('데이터 가져오기 중 에러 발생:', error);
+      if (selectedCategory === '전체') {
+        const allData = await fetchLeisureData([
+          'spring',
+          'summer',
+          'fall',
+          'winter',
+        ]);
+        newData = allData.flat();
+      } else {
+        const translatedCategory = translateCategory(selectedCategory);
+        newData = await fetchLeisureData([translatedCategory]);
       }
-    };
 
-    fetchData();
-  }, [selectedCategory]);
+      setLeisureData((prevData) => [...prevData, ...newData]);
 
-  const translateCategory = (category: string): string => {
-    switch (category) {
-      case '봄':
-        return 'spring';
-      case '여름':
-        return 'summer';
-      case '가을':
-        return 'fall';
-      case '겨울':
-        return 'winter';
-      default:
-        return category;
+      if (newData.length === 0) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('데이터 가져오기 중 에러 발생:', error);
     }
   };
 
+  const handleScroll = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = window.innerHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 200 && hasMore) {
+      fetchMoreData();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasMore, selectedCategory]);
+
+  useEffect(() => {
+    setLeisureData([]);
+    setHasMore(true);
+    fetchMoreData();
+  }, [selectedCategory]);
+
   return (
-    <div>
-      <div>
+    <Container>
+      <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('봄')}>봄</button>
         <button onClick={() => handleCategoryClick('여름')}>여름</button>
         <button onClick={() => handleCategoryClick('가을')}>가을</button>
         <button onClick={() => handleCategoryClick('겨울')}>겨울</button>
-      </div>
-      <div>
+      </ButtonsContainer>
+      <ItemContainer>
         {leisureData.map((item, index) => (
-          <div key={index}>
-            <img
-              src={item.imageURL}
-              alt={item.name}
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-            />
+          <ItemWrapper key={index}>
+            <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
-          </div>
+          </ItemWrapper>
         ))}
-      </div>
-    </div>
+      </ItemContainer>
+    </Container>
   );
 };
 

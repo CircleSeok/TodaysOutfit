@@ -130,3 +130,18 @@ export function getOutfitByCategory(category: string): string[] {
       ];
   }
 }
+
+export const translateCategory = (category: string): string => {
+  switch (category) {
+    case '봄':
+      return 'spring';
+    case '여름':
+      return 'summer';
+    case '가을':
+      return 'fall';
+    case '겨울':
+      return 'winter';
+    default:
+      return category;
+  }
+};

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { fetchClothesData } from '../api/firebase';
 import { getOutfitByCategory } from '../components/WeatherUtils';
 
@@ -10,28 +11,86 @@ interface ClothesItem {
   description: string;
 }
 
+const Container = styled.div`
+  width: 1080px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+  margin: 0 auto;
+`;
+
+const ButtonsContainer = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const ItemWrapper = styled.div`
+  width: calc(25% - 10px);
+  margin-bottom: 20px;
+  img {
+    height: 278px;
+    width: 278px;
+    object-fit: cover;
+  }
+`;
+
 const ClothesDetail: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const category = getOutfitByCategory(selectedCategory);
-        console.log('Selected Category:', category);
-        const data = await fetchClothesData(category);
-        console.log('Fetched Data:', data);
-        setClothesData(data);
-      } catch (error) {
-        console.error('데이터 가져오기 중 에러 발생:', error);
-      }
-    };
+  const fetchMoreData = async () => {
+    try {
+      const category = getOutfitByCategory(selectedCategory);
+      const newData = await fetchClothesData(category);
 
-    fetchData();
+      setClothesData((prevData) => [...prevData, ...newData]);
+
+      if (newData.length === 0) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error('데이터 가져오기 중 에러 발생:', error);
+    }
+  };
+
+  const handleScroll = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = window.innerHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 200 && hasMore) {
+      fetchMoreData();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasMore, selectedCategory]);
+
+  useEffect(() => {
+    setClothesData([]);
+    setHasMore(true);
+    fetchMoreData();
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -39,26 +98,22 @@ const ClothesDetail: React.FC = () => {
   }, [clothesData]);
 
   return (
-    <div>
-      <div>
+    <Container>
+      <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('아우터')}>아우터</button>
         <button onClick={() => handleCategoryClick('상의')}>상의</button>
         <button onClick={() => handleCategoryClick('하의')}>하의</button>
-      </div>
-      <div>
+      </ButtonsContainer>
+      <ItemContainer>
         {clothesData.map((item, index) => (
-          <div key={index}>
-            <img
-              src={item.imageURL}
-              alt={item.name}
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-            />
+          <ItemWrapper key={index}>
+            <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
-          </div>
+          </ItemWrapper>
         ))}
-      </div>
-    </div>
+      </ItemContainer>
+    </Container>
   );
 };
 
