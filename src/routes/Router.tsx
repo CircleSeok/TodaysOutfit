@@ -3,9 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import SignUp from '../pages/SignUp';
 import Main from '../pages/Main';
 import Clothes from '../pages/ClothesList';
+import Leisure from '../pages/Leisure';
+import ClothesRecommend from '../pages/ClothesRecommend';
+import LeisureRecommend from '../pages/LeisureRecommend';
 import ClothesDetail from '../pages/ClothesDetail';
 import LeisureDetail from '../pages/LeisureDetail';
-import Leisure from '../pages/Leisure';
 
 function Router() {
   return (
@@ -14,8 +16,10 @@ function Router() {
       <Route path='/signup' element={<SignUp redirectPath='/' />} />
       <Route path='/clothes' element={<Clothes />} />
       <Route path='/leisure' element={<Leisure />} />
-      <Route path='/clothesdetail' element={<ClothesDetail />} />
-      <Route path='/leisuredetail' element={<LeisureDetail />} />
+      <Route path='/clothesrecommend' element={<ClothesRecommend />} />
+      <Route path='/leisurerecommend' element={<LeisureRecommend />} />
+      <Route path='/clothesrecommend/:itemName' element={<ClothesDetail />} />
+      <Route path='/leisurerecommend/:itemName' element={<LeisureDetail />} />
     </Routes>
   );
 }

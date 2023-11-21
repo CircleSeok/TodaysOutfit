@@ -48,7 +48,7 @@ export default function Leisure() {
   const openModal = () => {
     const currentuser = auth.currentUser;
     if (currentuser) {
-      navigate('/leisuredetail');
+      navigate('/leisurerecommend');
     } else {
       setModalOpen(true);
     }

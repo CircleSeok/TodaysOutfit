@@ -65,7 +65,7 @@ const ClothesList: React.FC = () => {
   const openModal = () => {
     const currentuser = auth.currentUser;
     if (currentuser) {
-      navigate('/clothesDetail');
+      navigate('/clothesrecommend');
     } else {
       setModalOpen(true);
     }
