@@ -129,6 +129,7 @@ const LeisureRecommend: React.FC = () => {
               state={{
                 itemName: item.name,
                 imageURL: item.imageURL,
+                itemDescription: item.description,
               }}
             >
               <img src={item.imageURL} alt={item.name} />

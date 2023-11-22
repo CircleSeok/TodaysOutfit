@@ -95,6 +95,20 @@ export async function fetchClothesData(
   return clothesData;
 }
 
+//clothe db
+
+export async function AllClothesData(): Promise<ClothesItem[]> {
+  const clothesCollection = collection(db, 'clothes');
+  const querySnapshot = await getDocs(clothesCollection);
+
+  const clothesData: ClothesItem[] = [];
+  querySnapshot.forEach((doc) => {
+    clothesData.push(doc.data() as ClothesItem);
+  });
+
+  return clothesData;
+}
+
 export async function fetchLeisureData(
   leisureCategories: string[]
 ): Promise<LeisureItem[]> {
