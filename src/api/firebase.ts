@@ -126,3 +126,16 @@ export async function fetchLeisureData(
 
   return leisureData;
 }
+
+///leisureDB
+export async function AllLeisureData(): Promise<LeisureItem[]> {
+  const LeisureCollection = collection(db, 'leisure');
+  const querySnapshot = await getDocs(LeisureCollection);
+
+  const leisureData: ClothesItem[] = [];
+  querySnapshot.forEach((doc) => {
+    leisureData.push(doc.data() as ClothesItem);
+  });
+
+  return leisureData;
+}
