@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { LeisureItem } from './Leisure';
 import { AllLeisureData } from '../api/firebase';
 import styled from 'styled-components';
+import { useComments } from '../hooks/CommenUtils';
+import { LeisureItem } from './Leisure';
+
 const Container = styled.div`
   width: 1080px;
   margin: 0 auto;
@@ -12,6 +14,7 @@ const Container = styled.div`
   flex-direction: column;
   border: 1px solid red;
 `;
+
 const MainImage = styled.img`
   width: 100%;
   height: 100%;
@@ -35,9 +38,12 @@ const ClothesContainer = styled.div`
 
 const LeisureDetail: React.FC = () => {
   const location: any = useLocation();
-
   const { itemName, imageURL, itemDescription } = location.state;
   const [randomLeisures, setRandomLeisures] = useState<LeisureItem[]>([]);
+
+  // 댓글 관련 로직 가져오기
+  const { comments, commentText, handleCommentChange, onSubmitComment } =
+    useComments('leisure', itemName);
 
   useEffect(() => {
     const fetchRandomLeisures = async () => {
@@ -55,7 +61,7 @@ const LeisureDetail: React.FC = () => {
       }
     };
     fetchRandomLeisures();
-  }, []);
+  }, [itemName]);
 
   const getRandomIndexes = (max: number, count: number): number[] => {
     const indexes: number[] = [];
@@ -74,7 +80,6 @@ const LeisureDetail: React.FC = () => {
       <MainImage src={imageURL} alt={itemName} />
       <p>{itemDescription}</p>
 
-      {/* 랜덤으로 선택된 4개의 레저 표시 */}
       <p>추천 레저</p>
       <ClothesContainer>
         {randomLeisures.map((item, index) => (
@@ -84,8 +89,24 @@ const LeisureDetail: React.FC = () => {
           </div>
         ))}
       </ClothesContainer>
-      {/* 댓글 인풋 */}
-      {/* 댓글영역 */}
+
+      <div>
+        <input
+          type='text'
+          value={commentText}
+          onChange={handleCommentChange}
+          placeholder='댓글을 입력하세요'
+        />
+        <button onClick={onSubmitComment}>댓글 작성</button>
+      </div>
+
+      <div>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <p>{comment.text}</p>
+          </div>
+        ))}
+      </div>
     </Container>
   );
 };

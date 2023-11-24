@@ -1,24 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { auth, db } from '../api/firebase';
-import { getDocs, query, where, collection, addDoc } from 'firebase/firestore';
 import { AllClothesData } from '../api/firebase';
 import { ClothesItem } from './ClothesList';
-
-export interface Comment {
-  id: string;
-  userId: string;
-  postType: string;
-  postId: string;
-  text: string;
-}
-
-interface ClothesDetailProps {
-  itemName: string;
-  imageURL: string;
-  itemDescription: string;
-}
+import styled from 'styled-components';
+import { useComments } from '../hooks/CommenUtils';
 
 const Container = styled.div`
   width: 1080px;
@@ -29,7 +14,6 @@ const Container = styled.div`
   flex-direction: column;
   border: 1px solid red;
 `;
-
 const MainImage = styled.img`
   width: 100%;
   height: 100%;
@@ -37,7 +21,6 @@ const MainImage = styled.img`
   margin-bottom: 20px;
   border-radius: 8px;
 `;
-
 const ClothesContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -60,48 +43,29 @@ const CommentItem = styled.div`
   margin-bottom: 10px;
 `;
 
+interface ClothesDetailProps {
+  itemName: string;
+  imageURL: string;
+  itemDescription: string;
+}
+
 const ClothesDetail: React.FC = () => {
   const location = useLocation();
   const { itemName, imageURL, itemDescription } =
     location.state as ClothesDetailProps;
   const [randomClothes, setRandomClothes] = useState<ClothesItem[]>([]);
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [commentText, setCommentText] = useState('');
 
-  const fetchComments = async () => {
-    try {
-      const commentsSnapshot = await getDocs(
-        query(
-          collection(db, 'comments'),
-          where('postType', '==', 'clothes'),
-          where('postId', '==', itemName)
-        )
-      );
-
-      const commentsData = commentsSnapshot.docs.map(
-        (doc) =>
-          ({
-            id: doc.id,
-            ...doc.data(),
-          } as Comment)
-      );
-
-      setComments(commentsData);
-    } catch (error) {
-      console.error('댓글 가져오기 에러', error);
-    }
-  };
+  const { comments, commentText, handleCommentChange, onSubmitComment } =
+    useComments('clothes', itemName);
 
   useEffect(() => {
     const fetchRandomClothes = async () => {
       try {
         const clothesData = await AllClothesData();
-
         const randomIndexes = getRandomIndexes(clothesData.length, 4);
         const selectedClothes = randomIndexes.map(
           (index) => clothesData[index]
         );
-
         setRandomClothes(selectedClothes);
       } catch (error) {
         console.error('패치 에러', error);
@@ -109,7 +73,6 @@ const ClothesDetail: React.FC = () => {
     };
 
     fetchRandomClothes();
-    fetchComments();
   }, [itemName]);
 
   const getRandomIndexes = (max: number, count: number): number[] => {
@@ -121,28 +84,6 @@ const ClothesDetail: React.FC = () => {
       }
     }
     return indexes;
-  };
-
-  const onSubmitComment = async () => {
-    try {
-      const userId = auth.currentUser?.uid;
-
-      await addDoc(collection(db, 'comments'), {
-        userId: userId,
-        postType: 'clothes',
-        postId: itemName,
-        text: commentText,
-      });
-
-      fetchComments();
-      setCommentText('');
-    } catch (error) {
-      console.error('댓글 추가 에러', error);
-    }
-  };
-
-  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCommentText(e.target.value);
   };
 
   return (
