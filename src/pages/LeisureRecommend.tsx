@@ -114,6 +114,7 @@ const LeisureRecommend: React.FC = () => {
 
   return (
     <Container>
+      <div>여러가지 레저를 추천해드려요</div>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('봄')}>봄</button>
@@ -121,6 +122,7 @@ const LeisureRecommend: React.FC = () => {
         <button onClick={() => handleCategoryClick('가을')}>가을</button>
         <button onClick={() => handleCategoryClick('겨울')}>겨울</button>
       </ButtonsContainer>
+      <div>원하는 레저 찾아보세요</div>
       <ItemContainer>
         {leisureData.map((item, index) => (
           <ItemWrapper key={index}>

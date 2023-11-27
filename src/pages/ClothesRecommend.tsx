@@ -106,12 +106,14 @@ const ClothesRecommend: React.FC = () => {
 
   return (
     <Container>
+      <div>여러가지 옷을 추천해드려요</div>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('아우터')}>아우터</button>
         <button onClick={() => handleCategoryClick('상의')}>상의</button>
         <button onClick={() => handleCategoryClick('하의')}>하의</button>
       </ButtonsContainer>
+      <div>원하는 옷을 찾아보세요</div>
       <ItemContainer>
         {clothesData.map((item, index) => (
           <ItemWrapper key={index}>
