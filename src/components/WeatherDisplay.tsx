@@ -9,6 +9,7 @@ import {
   LeftBottomContainer,
   InputContainer,
   WeatherDetails,
+  DownBtn,
 } from './Styles';
 import {
   transformCityName,
@@ -107,14 +108,15 @@ const WeatherDisplay: React.FC = () => {
             {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
           </p>
 
-          <FaAngleDoubleDown onClick={handleClothesButtonClick} />
-
           <LeftBottomContainer>
             <CityandTemp>
               <h2>{weatherData.main.temp}°C</h2>
               <h1>{city}</h1>
             </CityandTemp>
           </LeftBottomContainer>
+          <DownBtn>
+            <FaAngleDoubleDown onClick={handleClothesButtonClick} />
+          </DownBtn>
         </WeatherInfo>
         <WeatherDataContainer>
           <InputContainer>

@@ -1,3 +1,4 @@
+import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 
 export const ClothesListContainer = styled.div`
@@ -23,5 +24,9 @@ export const ClothesWrap = styled.div`
 export const MoreButton = styled.button`
   width: 200px;
   height: 60px;
-  margin-top: 50px;
+  margin-top: 20px;
+`;
+
+export const ScrollWrap = styled.div`
+  font-size: 30px;
 `;

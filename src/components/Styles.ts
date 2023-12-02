@@ -57,6 +57,7 @@ export const WeatherInfo = styled.div`
   flex: 7;
   align-items: flex-start;
   margin-left: 30px;
+  height: 100%;
 `;
 
 export const LeftBottomContainer = styled.div`
@@ -98,4 +99,12 @@ export const WeatherDisplayContainer = styled.div`
   align-items: center;
   height: 100vh;
   width: 1903px;
+`;
+
+export const DownBtn = styled.div`
+  border: 1px solid black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: 280px;
 `;

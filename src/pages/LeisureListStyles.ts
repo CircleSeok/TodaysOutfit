@@ -25,3 +25,7 @@ export const MoreButton = styled.button`
   height: 60px;
   margin-top: 50px;
 `;
+
+export const ScrollWrap = styled.div`
+  font-size: 30px;
+`;

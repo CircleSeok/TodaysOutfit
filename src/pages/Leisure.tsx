@@ -5,6 +5,7 @@ import {
   LeisureListContainer,
   LeisureWrap,
   MoreButton,
+  ScrollWrap,
 } from './LeisureListStyles';
 import useWeatherStore from '../store/WeatherStore';
 import { getSeason } from '../components/WeatherUtils';
@@ -72,7 +73,10 @@ export default function Leisure() {
 
   return (
     <LeisureListContainer>
-      <FaAngleDoubleUp onClick={backToPreviousSection} />
+      <ScrollWrap>
+        <FaAngleDoubleUp onClick={backToPreviousSection} />
+      </ScrollWrap>
+
       <h2>여가활동 추천</h2>
       <p>{weatherData?.main.temp}</p>
       <LeisureWrap>
@@ -94,7 +98,10 @@ export default function Leisure() {
       <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
       {/* <button onClick={openWeatherSection}>weather로</button>
       <button onClick={backToPreviousSection}>이전 화면으로</button> */}
-      <FaAngleDoubleDown onClick={openWeatherSection} />
+      <ScrollWrap>
+        <FaAngleDoubleDown onClick={openWeatherSection} />
+      </ScrollWrap>
+
       {isModalOpen && <SignUp redirectPath='/leisure' />}
     </LeisureListContainer>
   );
