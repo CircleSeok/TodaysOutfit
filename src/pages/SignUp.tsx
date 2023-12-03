@@ -38,11 +38,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
       signIn(email, password)
         .then(() => {
           console.log('로그인 성공');
-          if (redirectPath === '/clothesList') {
-            navigate('/clothesdetail');
-          } else if (redirectPath === '/leisure') {
-            navigate('/leisuredetail');
-          }
+          setModalOpen(false);
         })
         .catch((error) => {
           console.log(error.message);
@@ -51,11 +47,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
       createUser(email, password)
         .then(() => {
           console.log('회원가입 성공');
-          if (redirectPath === '/clothes') {
-            navigate('/clothesdetail');
-          } else if (redirectPath === '/leisure') {
-            navigate('/leisuredetail');
-          }
+          setModalOpen(false);
         })
         .catch((error) => {
           console.log(error.message);
