@@ -11,14 +11,18 @@ export const ClothesListContainer = styled.div`
 `;
 
 export const ClothesItemContainer = styled.div`
-  flex-basis: 25%;
-  padding: 45px;
+  flex-basis: calc(25% - 20px);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   border: 1px solid green;
 `;
 
 export const ClothesWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 export const MoreButton = styled.button`

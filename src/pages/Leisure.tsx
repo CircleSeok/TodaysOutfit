@@ -86,7 +86,7 @@ export default function Leisure() {
               src={item.imageURL}
               alt={item.name}
               style={{
-                height: '100%',
+                height: '300px',
                 width: '100%',
                 objectFit: 'cover',
               }}
