@@ -8,7 +8,7 @@ import {
   ScrollWrap,
 } from './ClothesListStyles';
 import useWeatherStore from '../store/WeatherStore';
-import { getWeatherOutfit } from '../components/WeatherUtils';
+import { getWeatherOutfit } from './WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import SignUp from './SignUp';
 import ModalStore from '../store/ModalStore';
@@ -87,7 +87,7 @@ const ClothesList: React.FC = () => {
       </ScrollWrap>
 
       <h2>옷 목록</h2>
-      <p>{weatherData?.main.temp}</p>
+      {/* <p>{weatherData?.main.temp}</p> */}
       <ClothesWrap>
         {clothesData.slice(0, 8).map((item, index) => (
           <ClothesItemContainer key={index}>
@@ -100,7 +100,7 @@ const ClothesList: React.FC = () => {
           </ClothesItemContainer>
         ))}
       </ClothesWrap>
-      <button onClick={handleLogout}>로그아웃</button>
+      {/* <button onClick={handleLogout}>로그아웃</button> */}
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
       <ScrollWrap>
         <FaAngleDoubleDown onClick={openLeisureSection} />

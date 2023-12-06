@@ -3,16 +3,20 @@ import { useLocation } from 'react-router-dom';
 import { AllLeisureData } from '../api/firebase';
 import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
-import { LeisureItem } from './Leisure';
+import { LeisureItem } from '../components/Leisure';
 
 const Container = styled.div`
   width: 1080px;
   margin: 0 auto;
-  padding: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
   border: 1px solid red;
+`;
+
+const MainImgWrap = styled.div`
+  width: 60%;
+  height: 690px;
 `;
 
 const MainImage = styled.img`
@@ -25,15 +29,36 @@ const MainImage = styled.img`
 
 const ClothesContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 20px;
 
   img {
-    width: 250px;
-    height: 250px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-radius: 8px;
   }
+`;
+
+const Test = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  flex-basis: 250px;
+  /* flex-basis: calc(25% - 20px); */
+`;
+
+const CommentContainer = styled.div`
+  margin-top: 20px;
+`;
+
+const CommentItem = styled.div`
+  border: 1px solid black;
+  margin-bottom: 10px;
 `;
 
 const LeisureDetail: React.FC = () => {
@@ -41,7 +66,6 @@ const LeisureDetail: React.FC = () => {
   const { itemName, imageURL, itemDescription } = location.state;
   const [randomLeisures, setRandomLeisures] = useState<LeisureItem[]>([]);
 
-  // 댓글 관련 로직 가져오기
   const { comments, commentText, handleCommentChange, onSubmitComment } =
     useComments('leisure', itemName);
 
@@ -77,20 +101,22 @@ const LeisureDetail: React.FC = () => {
   return (
     <Container>
       <p>{itemName}</p>
-      <MainImage src={imageURL} alt={itemName} />
-      <p>{itemDescription}</p>
+      <MainImgWrap>
+        <MainImage src={imageURL} alt={itemName} />
+      </MainImgWrap>
+      {/* <p>{itemDescription}</p> */}
 
       <p>추천 레저</p>
       <ClothesContainer>
         {randomLeisures.map((item, index) => (
-          <div key={index}>
+          <Test key={index}>
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
-          </div>
+          </Test>
         ))}
       </ClothesContainer>
 
-      <div>
+      <CommentContainer>
         <input
           type='text'
           value={commentText}
@@ -98,15 +124,15 @@ const LeisureDetail: React.FC = () => {
           placeholder='댓글을 입력하세요'
         />
         <button onClick={onSubmitComment}>댓글 작성</button>
-      </div>
+      </CommentContainer>
 
-      <div>
+      <CommentContainer>
         {comments.map((comment) => (
-          <div key={comment.id}>
+          <CommentItem key={comment.id}>
             <p>{comment.text}</p>
-          </div>
+          </CommentItem>
         ))}
-      </div>
+      </CommentContainer>
     </Container>
   );
 };

@@ -20,8 +20,8 @@ import {
   addDoc,
   where,
 } from 'firebase/firestore';
-import { ClothesItem } from '../pages/ClothesList';
-import { LeisureItem } from '../pages/Leisure';
+import { ClothesItem } from '../components/ClothesList';
+import { LeisureItem } from '../components/Leisure';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

@@ -8,7 +8,7 @@ import {
   ScrollWrap,
 } from './LeisureListStyles';
 import useWeatherStore from '../store/WeatherStore';
-import { getSeason } from '../components/WeatherUtils';
+import { getSeason } from './WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import ModalStore from '../store/ModalStore';
 import SignUp from './SignUp';
@@ -78,7 +78,7 @@ export default function Leisure() {
       </ScrollWrap>
 
       <h2>여가활동 추천</h2>
-      <p>{weatherData?.main.temp}</p>
+      {/* <p>{weatherData?.main.temp}</p> */}
       <LeisureWrap>
         {leisureData.slice(0, 8).map((item, index) => (
           <LeisureItemContainer key={index}>

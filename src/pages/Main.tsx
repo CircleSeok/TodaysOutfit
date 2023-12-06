@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Element } from 'react-scroll';
 import Weather from '../components/Weather';
-import Clothes from './ClothesList';
-import Leisure from './Leisure';
+import Clothes from '../components/ClothesList';
+import Leisure from '../components/Leisure';
 import styled from 'styled-components';
 
 const MainContainer = styled.div`

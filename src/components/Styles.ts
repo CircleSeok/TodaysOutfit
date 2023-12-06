@@ -102,9 +102,9 @@ export const WeatherDisplayContainer = styled.div`
 `;
 
 export const DownBtn = styled.div`
-  border: 1px solid black;
   width: 100%;
   display: flex;
   justify-content: center;
   margin-left: 280px;
+  margin-bottom: 10px;
 `;

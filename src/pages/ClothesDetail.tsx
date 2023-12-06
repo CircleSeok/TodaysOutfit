@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AllClothesData } from '../api/firebase';
-import { ClothesItem } from './ClothesList';
+import { ClothesItem } from '../components/ClothesList';
 import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
 
 const Container = styled.div`
   width: 1080px;
   margin: 0 auto;
-  padding: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
   border: 1px solid red;
 `;
+
+const MainImgWrap = styled.div`
+  width: 60%;
+  height: 690px;
+`;
+
 const MainImage = styled.img`
   width: 100%;
   height: 100%;
@@ -22,16 +27,32 @@ const MainImage = styled.img`
   border-radius: 8px;
 `;
 const ClothesContainer = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   margin-top: 20px;
-
+  flex-basis: calc(25% - 20px); */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   img {
-    width: 250px;
-    height: 250px;
+    /* height: 250px; */
+    height: 100%;
+    width: 100%;
     object-fit: cover;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-radius: 8px;
   }
+`;
+
+const Test = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  flex-basis: 250px;
+  /* flex-basis: calc(25% - 20px); */
 `;
 
 const CommentContainer = styled.div`
@@ -89,16 +110,19 @@ const ClothesDetail: React.FC = () => {
   return (
     <Container>
       <p>{itemName}</p>
-      <MainImage src={imageURL} alt={itemName} />
-      <p>{itemDescription}</p>
+      <MainImgWrap>
+        <MainImage src={imageURL} alt={itemName} />
+      </MainImgWrap>
+
+      {/* <p>{itemDescription}</p> */}
 
       <p>추천 옷</p>
       <ClothesContainer>
         {randomClothes.map((item, index) => (
-          <div key={index}>
+          <Test key={index}>
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
-          </div>
+          </Test>
         ))}
       </ClothesContainer>
 

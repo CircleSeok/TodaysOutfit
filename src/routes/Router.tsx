@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import SignUp from '../pages/SignUp';
+import SignUp from '../components/SignUp';
 import Main from '../pages/Main';
-import Clothes from '../pages/ClothesList';
-import Leisure from '../pages/Leisure';
+import Clothes from '../components/ClothesList';
+import Leisure from '../components/Leisure';
 import ClothesRecommend from '../pages/ClothesRecommend';
 import LeisureRecommend from '../pages/LeisureRecommend';
 import ClothesDetail from '../pages/ClothesDetail';
