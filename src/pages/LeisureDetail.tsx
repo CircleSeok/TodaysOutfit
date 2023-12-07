@@ -52,13 +52,40 @@ const Test = styled.div`
   /* flex-basis: calc(25% - 20px); */
 `;
 
-const CommentContainer = styled.div`
+const InputWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 150px;
   margin-top: 20px;
+`;
+
+const CommentInput = styled.input`
+  width: 100%;
+  height: 70%;
+  margin-bottom: 10px;
+`;
+
+const CommentButton = styled.button`
+  width: 60%;
+  height: 30%;
+`;
+
+const CommentContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid blue;
 `;
 
 const CommentItem = styled.div`
   border: 1px solid black;
   margin-bottom: 10px;
+  width: calc(50% - 5px);
+  box-sizing: border-box;
 `;
 
 const LeisureDetail: React.FC = () => {
@@ -116,18 +143,18 @@ const LeisureDetail: React.FC = () => {
         ))}
       </ClothesContainer>
 
-      <CommentContainer>
-        <input
+      <InputWrap>
+        <CommentInput
           type='text'
           value={commentText}
           onChange={handleCommentChange}
           placeholder='댓글을 입력하세요'
         />
-        <button onClick={onSubmitComment}>댓글 작성</button>
-      </CommentContainer>
+        <CommentButton onClick={onSubmitComment}>댓글 작성</CommentButton>
+      </InputWrap>
 
       <CommentContainer>
-        {comments.map((comment) => (
+        {comments.slice(0, 8).map((comment) => (
           <CommentItem key={comment.id}>
             <p>{comment.text}</p>
           </CommentItem>

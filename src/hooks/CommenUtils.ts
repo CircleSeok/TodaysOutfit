@@ -1,6 +1,14 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getDocs, query, where, collection, addDoc } from 'firebase/firestore';
+import {
+  getDocs,
+  query,
+  where,
+  collection,
+  addDoc,
+  serverTimestamp,
+  orderBy,
+} from 'firebase/firestore';
 import { db, auth } from '../api/firebase';
 
 export interface Comment {
@@ -9,6 +17,7 @@ export interface Comment {
   postType: string;
   postId: string;
   text: string;
+  timestamp: { seconds: number; nanoseconds: number };
 }
 
 export const useComments = (postType: string, postId: string) => {
@@ -23,7 +32,8 @@ export const useComments = (postType: string, postId: string) => {
         query(
           collection(db, 'comments'),
           where('postType', '==', postType),
-          where('postId', '==', postId)
+          where('postId', '==', postId),
+          orderBy('timestamp', 'desc')
         )
       );
 
@@ -50,6 +60,7 @@ export const useComments = (postType: string, postId: string) => {
         postType: postType,
         postId: postId,
         text: commentText,
+        timestamp: serverTimestamp(),
       });
 
       fetchComments();
