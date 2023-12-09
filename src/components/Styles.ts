@@ -107,4 +107,11 @@ export const DownBtn = styled.div`
   justify-content: center;
   margin-left: 280px;
   margin-bottom: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    filter: brightness(1.2);
+  }
 `;

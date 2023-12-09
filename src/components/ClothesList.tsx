@@ -86,7 +86,7 @@ const ClothesList: React.FC = () => {
         <FaAngleDoubleUp onClick={backToPreviousSection} />
       </ScrollWrap>
 
-      <h2>옷 목록</h2>
+      <h2>옷추천 목록</h2>
       {/* <p>{weatherData?.main.temp}</p> */}
       <ClothesWrap>
         {clothesData.slice(0, 8).map((item, index) => (

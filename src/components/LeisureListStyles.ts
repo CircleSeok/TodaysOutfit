@@ -35,4 +35,11 @@ export const MoreButton = styled.button`
 export const ScrollWrap = styled.div`
   font-size: 30px;
   margin-top: auto;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    filter: brightness(1.2);
+  }
 `;
