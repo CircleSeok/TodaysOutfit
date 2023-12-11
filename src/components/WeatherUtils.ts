@@ -1,16 +1,16 @@
-export function transformCityName(cityName: string): string {
-  const cityMappings: { [key: string]: string } = {
-    seoul: '서울',
-    busan: '부산',
-    incheon: '인천',
-    daegu: '대구',
-    ulsan: '울산',
-    suwon: '수원',
-    daejeon: '대전',
-  };
+// export function transformCityName(cityName: string): string {
+//   const cityMappings: { [key: string]: string } = {
+//     seoul: '서울',
+//     busan: '부산',
+//     incheon: '인천',
+//     daegu: '대구',
+//     ulsan: '울산',
+//     suwon: '수원',
+//     daejeon: '대전',
+//   };
 
-  return cityMappings[cityName.toLowerCase()] || cityName;
-}
+//   return cityMappings[cityName.toLowerCase()] || cityName;
+// }
 
 export function getWeatherImage(
   temp: number,

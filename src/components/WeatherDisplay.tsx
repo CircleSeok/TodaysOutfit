@@ -12,7 +12,7 @@ import {
   DownBtn,
 } from './Styles';
 import {
-  transformCityName,
+  // transformCityName,
   getWeatherImage,
   getWeatherOutfit,
 } from './WeatherUtils';
@@ -72,7 +72,7 @@ const WeatherDisplay: React.FC = () => {
     return <p>날씨 정보를 불러오는 중입니다...</p>;
   }
 
-  const city = transformCityName(weatherData.name);
+  // const city = transformCityName(weatherData.name);
 
   const getDayOfWeek = (date: any) => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -111,7 +111,7 @@ const WeatherDisplay: React.FC = () => {
           <LeftBottomContainer>
             <CityandTemp>
               <h2>{weatherData.main.temp}°C</h2>
-              <h1>{city}</h1>
+              <h1>{weatherData.name}</h1>
             </CityandTemp>
           </LeftBottomContainer>
           <DownBtn>
@@ -123,7 +123,7 @@ const WeatherDisplay: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <input
                 type='text'
-                placeholder='SEARCH'
+                placeholder='SEARCH CITY NAME'
                 value={cityName}
                 onChange={handleChange}
               />

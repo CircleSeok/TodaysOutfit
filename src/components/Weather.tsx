@@ -16,7 +16,7 @@ export default function Weather() {
       }
     }
 
-    fetchData('서울');
+    fetchData('seoul');
   }, [setWeatherData]);
 
   return (
