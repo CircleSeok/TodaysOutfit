@@ -31,8 +31,14 @@ const ButtonsContainer = styled.div`
   button {
     width: 100px;
     height: 30px;
-    border-radius: 4px;
+    border-radius: 10px;
     border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: translateY(-5px) scale(1);
+      /* filter: brightness(1.2); */
+    }
   }
 `;
 

@@ -29,7 +29,13 @@ export const MoreButton = styled.button`
   height: 60px;
   margin-top: 20px;
   border: 1px solid #9f9b9b;
-  border-radius: 4px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    filter: brightness(1.2);
+  }
 `;
 
 export const ScrollWrap = styled.div`
