@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AllClothesData } from '../api/firebase';
 import { ClothesItem } from '../components/ClothesList';
 import styled from 'styled-components';
@@ -99,6 +99,7 @@ interface ClothesDetailProps {
 
 const ClothesDetail: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { itemName, imageURL, itemDescription } =
     location.state as ClothesDetailProps;
   const [randomClothes, setRandomClothes] = useState<ClothesItem[]>([]);
@@ -134,19 +135,29 @@ const ClothesDetail: React.FC = () => {
     return indexes;
   };
 
+  const handleItemClick = (item: ClothesItem) => {
+    navigate(`/clothesrecommend/${encodeURIComponent(item.name)}`, {
+      state: {
+        itemName: item.name,
+        imageURL: item.imageURL,
+        itemDescription: item.description,
+      },
+    });
+  };
+
   return (
     <Container>
-      <p>{itemName}</p>
+      <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />
       </MainImgWrap>
 
       {/* <p>{itemDescription}</p> */}
 
-      <p>추천 옷</p>
+      <h3>추천 옷</h3>
       <ClothesContainer>
         {randomClothes.map((item, index) => (
-          <Test key={index}>
+          <Test key={index} onClick={() => handleItemClick(item)}>
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
           </Test>

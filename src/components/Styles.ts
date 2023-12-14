@@ -12,6 +12,10 @@ export const WeatherDataContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 720px) {
+    padding: 10px;
+    font-size: 18px;
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -32,6 +36,10 @@ export const InputContainer = styled.div`
     border-bottom: 1px solid white;
     &::placeholder {
       color: white;
+    }
+    @media screen and (max-width: 720px) {
+      font-size: 16px;
+      width: 100%;
     }
   }
 `;
@@ -58,6 +66,14 @@ export const WeatherInfo = styled.div`
   align-items: flex-start;
   margin-left: 30px;
   height: 100%;
+  @media screen and (max-width: 720px) {
+    align-items: flex-start;
+    margin-left: 5;
+
+    p {
+      font-size: 30px;
+    }
+  }
 `;
 
 export const LeftBottomContainer = styled.div`
@@ -76,6 +92,17 @@ export const CityandTemp = styled.div`
   & > h1 {
     margin-left: 40px;
   }
+  @media screen and (max-width: 720px) {
+    align-items: center;
+    margin-bottom: -70px;
+    & > h1 {
+      font-size: 40px;
+    }
+    & > h1 {
+      margin-top: 50px;
+      font-size: 40px;
+    }
+  }
 `;
 
 interface WeatherBackgroundProps {
@@ -91,6 +118,9 @@ export const WeatherBackground = styled.div<WeatherBackgroundProps>`
   color: white;
   font-size: 30px;
   display: flex;
+  @media screen and (max-width: 720px) {
+    font-size: 18px;
+  }
 `;
 
 export const WeatherDisplayContainer = styled.div`
@@ -99,6 +129,10 @@ export const WeatherDisplayContainer = styled.div`
   align-items: center;
   height: 100vh;
   width: 1903px;
+  @media screen and (max-width: 720px) {
+    width: 720px;
+    padding: 10px;
+  }
 `;
 
 export const DownBtn = styled.div`
@@ -114,11 +148,7 @@ export const DownBtn = styled.div`
     transform: translateY(-5px) scale(1.1);
     filter: brightness(1.2);
   }
+  @media screen and (max-width: 720px) {
+    margin-left: 90px;
+  }
 `;
-
-//웹디 경력
-//중국어 가능 일본어 가능 영어 가능
-
-//유안누님도 학교 성적이 씨발 개쩔잖아
-// 이런거 씨발 보는거같다 ... 씨발 ....
-//그러니까 나 면저볼떄 공부안했네요ㅕ? ㅋㅋㅋ

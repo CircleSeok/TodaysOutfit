@@ -24,6 +24,7 @@ export interface ClothesItem {
 
 const ClothesList: React.FC = () => {
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
+  const [displayedItems, setDisplayedItems] = useState(8);
   const isModalOpen = ModalStore((state) => state.isModalOpen);
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
   const navigate = useNavigate();
@@ -46,6 +47,13 @@ const ClothesList: React.FC = () => {
     });
   };
 
+  const handleResize = () => {
+    if (window.innerWidth <= 730) {
+      setDisplayedItems(4);
+    } else {
+      setDisplayedItems(8);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,10 +65,17 @@ const ClothesList: React.FC = () => {
       } catch (error) {
         console.error('데이터 가져오기 중 에러 발생:', error);
       }
+      handleResize();
     };
     // console.log(weatherData);
     // console.log(clothesData);
     fetchData();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [weatherData]);
 
   const openModal = () => {
@@ -89,17 +104,14 @@ const ClothesList: React.FC = () => {
       <h2>옷추천 목록</h2>
       {/* <p>{weatherData?.main.temp}</p> */}
       <ClothesWrap>
-        {clothesData.slice(0, 8).map((item, index) => (
+        {clothesData.slice(0, displayedItems).map((item, index) => (
           <ClothesItemContainer key={index}>
-            <img
-              src={item.imageURL}
-              alt={item.name}
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-            />
+            <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
           </ClothesItemContainer>
         ))}
       </ClothesWrap>
+
       {/* <button onClick={handleLogout}>로그아웃</button> */}
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
       <ScrollWrap>

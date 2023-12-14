@@ -20,6 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   border: 1px solid red;
   margin: 0 auto;
+  align-items: flex-start;
 `;
 
 const ButtonsContainer = styled.div`
@@ -51,10 +52,13 @@ const ItemContainer = styled.div`
 const ItemWrapper = styled.div`
   width: calc(25% - 10px);
   margin-bottom: 20px;
+  text-align: center;
   img {
-    height: 200px;
-    width: 200px;
+    height: 250px;
+    width: 250px;
     object-fit: cover;
+    border: 1px solid black;
+    border-radius: 20px;
   }
 `;
 
@@ -120,7 +124,7 @@ const LeisureRecommend: React.FC = () => {
 
   return (
     <Container>
-      <div>여러가지 레저를 추천해드려요</div>
+      <h1>여러가지 레저를 추천해드려요</h1>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('봄')}>봄</button>
@@ -128,7 +132,7 @@ const LeisureRecommend: React.FC = () => {
         <button onClick={() => handleCategoryClick('가을')}>가을</button>
         <button onClick={() => handleCategoryClick('겨울')}>겨울</button>
       </ButtonsContainer>
-      <div>원하는 레저 찾아보세요</div>
+      <h3>원하는 레저 찾아보세요</h3>
       <ItemContainer>
         {leisureData.map((item, index) => (
           <ItemWrapper key={index}>

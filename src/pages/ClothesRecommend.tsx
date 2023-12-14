@@ -20,6 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   border: 1px solid red;
   margin: 0 auto;
+  align-items: flex-start;
 `;
 
 const ButtonsContainer = styled.div`
@@ -51,10 +52,13 @@ const ItemContainer = styled.div`
 const ItemWrapper = styled.div`
   width: calc(25% - 10px);
   margin-bottom: 20px;
+  text-align: center;
   img {
     height: 250px;
     width: 250px;
     object-fit: cover;
+    border: 1px solid black;
+    border-radius: 20px;
   }
 `;
 
@@ -112,14 +116,14 @@ const ClothesRecommend: React.FC = () => {
 
   return (
     <Container>
-      <div>여러가지 옷을 추천해드려요</div>
+      <h1>여러가지 옷을 추천해드려요</h1>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('아우터')}>아우터</button>
         <button onClick={() => handleCategoryClick('상의')}>상의</button>
         <button onClick={() => handleCategoryClick('하의')}>하의</button>
       </ButtonsContainer>
-      <div>원하는 옷을 찾아보세요</div>
+      <h3>원하는 옷을 찾아보세요</h3>
       <ItemContainer>
         {clothesData.map((item, index) => (
           <ItemWrapper key={index}>

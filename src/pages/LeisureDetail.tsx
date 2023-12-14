@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AllLeisureData } from '../api/firebase';
 import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
@@ -90,6 +90,7 @@ const CommentItem = styled.div`
 
 const LeisureDetail: React.FC = () => {
   const location: any = useLocation();
+  const navigate = useNavigate();
   const { itemName, imageURL, itemDescription } = location.state;
   const [randomLeisures, setRandomLeisures] = useState<LeisureItem[]>([]);
 
@@ -125,18 +126,28 @@ const LeisureDetail: React.FC = () => {
     return indexes;
   };
 
+  const handleItemClick = (item: LeisureItem) => {
+    navigate(`/leisurerecommend/${encodeURIComponent(item.name)}`, {
+      state: {
+        itemName: item.name,
+        imageURL: item.imageURL,
+        itemDescription: item.description,
+      },
+    });
+  };
+
   return (
     <Container>
-      <p>{itemName}</p>
+      <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />
       </MainImgWrap>
       {/* <p>{itemDescription}</p> */}
 
-      <p>추천 레저</p>
+      <h3>추천 레저</h3>
       <ClothesContainer>
         {randomLeisures.map((item, index) => (
-          <Test key={index}>
+          <Test key={index} onClick={() => handleItemClick(item)}>
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
           </Test>

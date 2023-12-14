@@ -24,10 +24,19 @@ export interface LeisureItem {
 
 export default function Leisure() {
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
+  const [displayedItems, setDisplayedItems] = useState(8);
   const isModalOpen = ModalStore((state) => state.isModalOpen);
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
   const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 730) {
+      setDisplayedItems(4);
+    } else {
+      setDisplayedItems(8);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,8 +51,14 @@ export default function Leisure() {
       } catch (error) {
         console.log('데이터 가져오기 중 에러 발생:', error);
       }
+      handleResize();
     };
     fetchData();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [weatherData]);
 
   const openModal = () => {
@@ -80,17 +95,9 @@ export default function Leisure() {
       <h2>여가활동 추천</h2>
       {/* <p>{weatherData?.main.temp}</p> */}
       <LeisureWrap>
-        {leisureData.slice(0, 8).map((item, index) => (
+        {leisureData.slice(0, displayedItems).map((item, index) => (
           <LeisureItemContainer key={index}>
-            <img
-              src={item.imageURL}
-              alt={item.name}
-              style={{
-                height: '300px',
-                width: '100%',
-                objectFit: 'cover',
-              }}
-            />
+            <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
           </LeisureItemContainer>
         ))}

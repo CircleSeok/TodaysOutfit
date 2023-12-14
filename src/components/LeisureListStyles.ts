@@ -7,6 +7,13 @@ export const LeisureListContainer = styled.div`
   align-items: center;
   flex-direction: column;
   /* border: 1px solid red; */
+  @media screen and (max-width: 720px) {
+    width: 720px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 export const LeisureItemContainer = styled.div`
@@ -16,6 +23,29 @@ export const LeisureItemContainer = styled.div`
   align-items: center;
   flex-direction: column;
   /* border: 1px solid green; */
+  img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid black;
+    border-radius: 20px;
+  }
+  /* border: 1px solid green; */
+  @media screen and (max-width: 720px) {
+    flex-basis: calc(50% - 10px);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid green;
+
+    img {
+      border: 1px solid red;
+      height: 100%;
+      width: 50%;
+      object-fit: cover;
+    }
+  }
 `;
 
 export const LeisureWrap = styled.div`
@@ -28,7 +58,10 @@ export const MoreButton = styled.button`
   width: 200px;
   height: 60px;
   margin-top: 20px;
-  border: 1px solid #9f9b9b;
+  color: white;
+  /* border: 1px solid #9f9b9b; */
+  background-color: #18a0fb;
+  border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
