@@ -12,11 +12,18 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   border: 1px solid red;
+  @media (max-width: 720px) {
+    width: 720px;
+  }
 `;
 
 const MainImgWrap = styled.div`
   width: 60%;
   height: 690px;
+  border: 1px solid blue;
+  /* @media (max-width: 720px) {
+    width: 300px;
+  } */
 `;
 
 const MainImage = styled.img`
@@ -43,6 +50,10 @@ const ClothesContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     border-radius: 8px;
+    border: 1px solid black;
+  }
+  @media (max-width: 720px) {
+    justify-content: space-around;
   }
 `;
 

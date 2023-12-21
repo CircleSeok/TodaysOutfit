@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-
+import styled, { css, CSSObject } from 'styled-components';
+import { IoLogOutSharp, IoLogInSharp } from 'react-icons/io5';
 export const WeatherDataContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   flex: 3;
@@ -76,6 +76,33 @@ export const WeatherInfo = styled.div`
   }
 `;
 
+export const DateandUser = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
+`;
+
+export const Test = styled.div`
+  display: flex;
+  /* border: 1px solid black; */
+  width: 150px;
+  justify-content: space-between;
+`;
+
+export const StyledLogoutIcon = styled(IoLogOutSharp)`
+  margin-top: 40px;
+  color: red;
+  font-size: 30px;
+`;
+
+export const StyledLoginIcon = styled(IoLogInSharp)`
+  margin-top: 40px;
+  color: green;
+  font-size: 30px;
+`;
+
 export const LeftBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -106,10 +133,10 @@ export const CityandTemp = styled.div`
 `;
 
 interface WeatherBackgroundProps {
-  backgroundImage: string;
+  backgroundimage: string;
 }
 export const WeatherBackground = styled.div<WeatherBackgroundProps>`
-  background-image: url(${(props) => props.backgroundImage});
+  background-image: url(${(props) => props.backgroundimage});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

@@ -20,6 +20,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
+  const [nickname, setNickname] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
@@ -31,6 +32,29 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
 
     return () => unsubscribe();
   }, [auth]);
+
+  // const handleAuth = (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (isLogin) {
+  //     signIn(email, password)
+  //       .then(() => {
+  //         console.log('로그인 성공');
+  //         setModalOpen(false);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error.message);
+  //       });
+  //   } else {
+  //     createUser(email, password, nickname)
+  //       .then(() => {
+  //         console.log('회원가입 성공');
+  //         setModalOpen(false);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error.message);
+  //       });
+  //   }
+  // };
 
   const handleAuth = (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +68,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
           console.log(error.message);
         });
     } else {
-      createUser(email, password)
+      createUser(email, password, nickname)
         .then(() => {
           console.log('회원가입 성공');
           setModalOpen(false);
@@ -61,6 +85,10 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
   };
 
   const toggleAuthMode = () => {
@@ -93,6 +121,14 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
               value={password}
               onChange={handlePasswordChange}
             />
+            {!isLogin && (
+              <input
+                type='text'
+                placeholder='Nickname'
+                value={nickname}
+                onChange={handleNicknameChange}
+              />
+            )}
             <button type='submit'>{buttonText}</button>
             <button onClick={signInWithGoogle}>
               구글 아이디로 {buttonText}

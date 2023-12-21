@@ -10,6 +10,10 @@ import {
   InputContainer,
   WeatherDetails,
   DownBtn,
+  DateandUser,
+  Test,
+  StyledLogoutIcon,
+  StyledLoginIcon,
 } from './Styles';
 import {
   // transformCityName,
@@ -22,9 +26,11 @@ import { GiClothes } from 'react-icons/gi';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../api/firebase';
+import { auth, signOutUser } from '../api/firebase';
 import { scroller } from 'react-scroll';
 import { FaAngleDoubleDown } from 'react-icons/fa';
+import { IoLogOutSharp, IoLogInSharp } from 'react-icons/io5';
+import ModalStore from '../store/ModalStore';
 interface WeatherDisplayProps {
   weatherData: WeatherData | null;
 }
@@ -33,9 +39,12 @@ const WeatherDisplay: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date();
   const [cityName, setCityName] = useState<string>('');
+  const [user, setUser] = useState<User | null>(null);
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
+  const isModalOpen = ModalStore((state) => state.isModalOpen);
+  const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,11 +63,28 @@ const WeatherDisplay: React.FC = () => {
     setCityName(e.target.value);
   }, []);
 
-  const SignupClick = () => {
-    navigate('/signup');
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const openModal = () => {
+    const currentuser = auth.currentUser;
+
+    setModalOpen(true);
+  };
+  // const SignupClick = () => {
+  //   navigate('/signup');
+  // };
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(auth.currentUser);
+      setUser(user);
+    });
+
     if (weatherData) {
       const temp = weatherData.main.temp;
       const rain = weatherData.rain?.['1h'];
@@ -66,6 +92,7 @@ const WeatherDisplay: React.FC = () => {
       const image = getWeatherImage(temp, rain, snow);
       setBackgroundImage(image);
     }
+    return () => unsubscribe();
   }, [weatherData]);
 
   if (!weatherData) {
@@ -101,13 +128,24 @@ const WeatherDisplay: React.FC = () => {
 
   return (
     <WeatherDisplayContainer>
-      <WeatherBackground backgroundImage={backgroundImage}>
+      <WeatherBackground backgroundimage={backgroundImage}>
         <WeatherInfo>
-          <p>
-            {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
-            {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
-          </p>
-
+          <DateandUser>
+            <p>
+              {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
+              {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
+            </p>
+            <Test>
+              {user ? (
+                <>
+                  <StyledLogoutIcon onClick={handleLogout} />
+                  <p>{user.displayName} 님</p>
+                </>
+              ) : (
+                <StyledLoginIcon onClick={openModal} />
+              )}
+            </Test>
+          </DateandUser>
           <LeftBottomContainer>
             <CityandTemp>
               <h2>{weatherData.main.temp}°C</h2>

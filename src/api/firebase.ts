@@ -10,6 +10,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -37,12 +38,40 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 //회원가입
+// export async function createUser(
+//   email: string,
+//   password: string
+// ): Promise<UserCredential> {
+//   return await createUserWithEmailAndPassword(auth, email, password);
+// }
+
 export async function createUser(
   email: string,
-  password: string
+  password: string,
+  nickname: string
 ): Promise<UserCredential> {
-  return await createUserWithEmailAndPassword(auth, email, password);
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    // 회원가입 시 유저 정보에 닉네임 추가
+    if (user) {
+      await updateProfile(user, {
+        displayName: nickname,
+      });
+    }
+
+    return userCredential;
+  } catch (error) {
+    console.error('회원가입 중 에러 발생:', error);
+    throw error;
+  }
 }
+
 // 로그인
 export async function signIn(
   email: string,
