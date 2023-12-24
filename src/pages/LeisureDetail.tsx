@@ -12,11 +12,15 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   border: 1px solid red;
+  @media (max-width: 720px) {
+    width: 720px;
+  }
 `;
 
 const MainImgWrap = styled.div`
   width: 60%;
   height: 690px;
+  /* border: 1px solid blue; */
 `;
 
 const MainImage = styled.img`
@@ -25,6 +29,7 @@ const MainImage = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
   border-radius: 8px;
+  border: 1px solid black;
 `;
 
 const ClothesContainer = styled.div`
@@ -33,13 +38,17 @@ const ClothesContainer = styled.div`
   justify-content: space-between;
 
   img {
-    height: 100%;
+    height: 350px;
     width: 100%;
     object-fit: cover;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     border-radius: 8px;
+    border: 1px solid black;
+  }
+  @media (max-width: 720px) {
+    justify-content: space-around;
   }
 `;
 
@@ -49,7 +58,17 @@ const Test = styled.div`
   flex-direction: column;
   margin-top: 20px;
   flex-basis: 250px;
+  border: 1px solid red;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1);
+  }
   /* flex-basis: calc(25% - 20px); */
+
+  p {
+    margin-top: 10px;
+  }
 `;
 
 const InputWrap = styled.div`

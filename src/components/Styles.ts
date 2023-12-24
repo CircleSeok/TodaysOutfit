@@ -89,6 +89,9 @@ export const Test = styled.div`
   /* border: 1px solid black; */
   width: 150px;
   justify-content: space-between;
+  p {
+    margin-right: 20px;
+  }
 `;
 
 export const StyledLogoutIcon = styled(IoLogOutSharp)`

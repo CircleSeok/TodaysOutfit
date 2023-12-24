@@ -20,7 +20,7 @@ const Container = styled.div`
 const MainImgWrap = styled.div`
   width: 60%;
   height: 690px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   /* @media (max-width: 720px) {
     width: 300px;
   } */
@@ -32,6 +32,7 @@ const MainImage = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
   border-radius: 8px;
+  border: 1px solid black;
 `;
 const ClothesContainer = styled.div`
   /* display: flex;
@@ -42,8 +43,7 @@ const ClothesContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   img {
-    /* height: 250px; */
-    height: 100%;
+    height: 350px;
     width: 100%;
     object-fit: cover;
     display: flex;
@@ -63,7 +63,17 @@ const Test = styled.div`
   flex-direction: column;
   margin-top: 20px;
   flex-basis: 250px;
+  border: 1px solid red;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1);
+  }
   /* flex-basis: calc(25% - 20px); */
+
+  p {
+    margin-top: 10px;
+  }
 `;
 
 const InputWrap = styled.div`
