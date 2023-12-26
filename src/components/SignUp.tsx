@@ -9,8 +9,10 @@ import {
   FormContainer,
   Title,
   CloseButton,
+  AuthToggle,
 } from './SignUpStyles';
 import ModalStore from '../store/ModalStore';
+import styled from 'styled-components';
 
 interface SignUpProps {
   redirectPath: string;
@@ -105,7 +107,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
     <ModalContainer>
       <ModalContent>
         <Container>
-          <CloseButton onClick={handleCloseButtonClick}>닫기</CloseButton>
+          <CloseButton onClick={handleCloseButtonClick} />
           <Title>{buttonText}</Title>
 
           <FormContainer onSubmit={handleAuth}>
@@ -134,9 +136,12 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
               구글 아이디로 {buttonText}
             </button>
             <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
-              {isLogin
-                ? '회원이 아니신가요? 회원가입'
-                : '이미 회원이신가요? 로그인'}
+              {isLogin ? '회원이 아니신가요? ' : '이미 회원이신가요? '}
+              {isLogin ? (
+                <AuthToggle isLogin={isLogin}>회원가입</AuthToggle>
+              ) : (
+                <AuthToggle isLogin={isLogin}>로그인</AuthToggle>
+              )}
             </p>
           </FormContainer>
         </Container>

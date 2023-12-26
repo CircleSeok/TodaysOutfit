@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { IoMdClose } from 'react-icons/io';
 export const ModalContainer = styled.div`
   display: flex;
   align-items: center;
@@ -49,6 +49,10 @@ export const FormContainer = styled.form`
     margin-top: 154px;
   }
 
+  input:nth-child(3) + button {
+    margin-top: 56px;
+  }
+
   button {
     width: 500px;
     height: 80px;
@@ -57,11 +61,20 @@ export const FormContainer = styled.form`
     border: none;
     font-size: 18px;
     color: white;
+    cursor: pointer;
   }
 
   button + button {
     margin-top: 18px;
   }
+
+  button + p {
+    margin-top: 50px;
+  }
+`;
+
+export const AuthToggle = styled.span<{ isLogin: boolean }>`
+  color: ${(props) => (props.isLogin ? '#4a90e2' : '#4a90e2')};
 `;
 
 export const LogoContainer = styled.div`
@@ -78,7 +91,7 @@ export const Title = styled.div`
   font-size: 40px;
 `;
 
-export const CloseButton = styled.div`
+export const CloseButton = styled(IoMdClose)`
   position: absolute;
   top: 60px;
   right: 670px;
