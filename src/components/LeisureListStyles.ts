@@ -9,10 +9,11 @@ export const LeisureListContainer = styled.div`
   /* border: 1px solid red; */
   @media screen and (max-width: 720px) {
     width: 720px;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     align-items: center;
     flex-direction: column;
+    border: 1px solid red;
   }
 `;
 
@@ -33,15 +34,12 @@ export const LeisureItemContainer = styled.div`
   /* border: 1px solid green; */
   @media screen and (max-width: 720px) {
     flex-basis: calc(50% - 10px);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+
     border: 1px solid green;
 
     img {
       border: 1px solid red;
-      height: 100%;
+      height: 200px;
       width: 50%;
       object-fit: cover;
     }
@@ -71,14 +69,28 @@ export const MoreButton = styled.button`
   }
 `;
 
-export const ScrollWrap = styled.div`
+export const DownScrollWrap = styled.div`
   font-size: 30px;
   margin-top: auto;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {
-    transform: translateY(-5px) scale(1.1);
+    transform: translateY(-4px) scale(1.1);
     filter: brightness(1.2);
+  }
+`;
+
+export const UpScrollWrap = styled.div`
+  font-size: 30px;
+  margin-bottom: auto;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(4px) scale(1.1);
+    filter: brightness(1.2);
+  }
+  @media screen and (max-width: 720px) {
   }
 `;

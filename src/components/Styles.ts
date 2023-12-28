@@ -161,24 +161,25 @@ export const WeatherDisplayContainer = styled.div`
   width: 1903px;
   @media screen and (max-width: 720px) {
     width: 720px;
-    padding: 10px;
   }
 `;
 
 export const DownBtn = styled.div`
+  font-size: 30px;
   width: 100%;
   display: flex;
   justify-content: center;
   margin-left: 280px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  margin-bottom: auto;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {
-    transform: translateY(-5px) scale(1.1);
+    transform: translateY(-4px) scale(1.1);
     filter: brightness(1.2);
   }
   @media screen and (max-width: 720px) {
-    margin-left: 90px;
+    margin-left: 95px;
   }
 `;

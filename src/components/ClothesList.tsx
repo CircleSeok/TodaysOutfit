@@ -5,7 +5,8 @@ import {
   ClothesListContainer,
   ClothesWrap,
   MoreButton,
-  ScrollWrap,
+  DownScrollWrap,
+  UpScrollWrap,
 } from './ClothesListStyles';
 import useWeatherStore from '../store/WeatherStore';
 import { getWeatherOutfit } from './WeatherUtils';
@@ -97,9 +98,9 @@ const ClothesList: React.FC = () => {
 
   return (
     <ClothesListContainer>
-      <ScrollWrap>
+      <UpScrollWrap>
         <FaAngleDoubleUp onClick={backToPreviousSection} />
-      </ScrollWrap>
+      </UpScrollWrap>
 
       <h2>옷추천 목록</h2>
       {/* <p>{weatherData?.main.temp}</p> */}
@@ -114,9 +115,9 @@ const ClothesList: React.FC = () => {
 
       {/* <button onClick={handleLogout}>로그아웃</button> */}
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
-      <ScrollWrap>
+      <DownScrollWrap>
         <FaAngleDoubleDown onClick={openLeisureSection} />
-      </ScrollWrap>
+      </DownScrollWrap>
 
       {isModalOpen && <SignUp redirectPath='/clothesList' />}
     </ClothesListContainer>
