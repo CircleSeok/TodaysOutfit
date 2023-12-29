@@ -7,7 +7,6 @@ export const ClothesListContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* border: 1px solid red; */
   @media screen and (max-width: 720px) {
     width: 720px;
 
@@ -24,7 +23,6 @@ export const ClothesItemContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* border: 1px solid green; */
   img {
     height: 100%;
     width: 100%;
@@ -32,7 +30,6 @@ export const ClothesItemContainer = styled.div`
     border: 1px solid black;
     border-radius: 20px;
   }
-  /* border: 1px solid green; */
   @media screen and (max-width: 720px) {
     flex-basis: calc(50% - 10px);
     /* margin-bottom: 10px;
@@ -62,7 +59,6 @@ export const MoreButton = styled.button`
   margin-top: 20px;
   color: white;
   background-color: #18a0fb;
-  /* border: 1px solid #9f9b9b; */
   border: none;
   border-radius: 10px;
   cursor: pointer;

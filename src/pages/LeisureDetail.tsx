@@ -11,7 +11,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  border: 1px solid red;
   @media (max-width: 720px) {
     width: 720px;
   }
@@ -20,7 +19,6 @@ const Container = styled.div`
 const MainImgWrap = styled.div`
   width: 60%;
   height: 690px;
-  /* border: 1px solid blue; */
 `;
 
 const MainImage = styled.img`
@@ -58,7 +56,6 @@ const Test = styled.div`
   flex-direction: column;
   margin-top: 20px;
   flex-basis: 250px;
-  border: 1px solid red;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {
@@ -71,7 +68,7 @@ const Test = styled.div`
   }
 `;
 
-const InputWrap = styled.div`
+const InputWrap = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +94,6 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 20px;
-  border: 1px solid blue;
 `;
 
 const CommentItem = styled.div`
@@ -145,6 +141,11 @@ const LeisureDetail: React.FC = () => {
     return indexes;
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmitComment();
+  };
+
   const handleItemClick = (item: LeisureItem) => {
     navigate(`/leisurerecommend/${encodeURIComponent(item.name)}`, {
       state: {
@@ -173,14 +174,14 @@ const LeisureDetail: React.FC = () => {
         ))}
       </ClothesContainer>
 
-      <InputWrap>
+      <InputWrap onSubmit={handleSubmit}>
         <CommentInput
           type='text'
           value={commentText}
           onChange={handleCommentChange}
           placeholder='댓글을 입력하세요'
         />
-        <CommentButton onClick={onSubmitComment}>댓글 작성</CommentButton>
+        <CommentButton type='submit'>댓글 작성</CommentButton>
       </InputWrap>
 
       <CommentContainer>

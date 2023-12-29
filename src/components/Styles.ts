@@ -21,7 +21,6 @@ export const WeatherDataContainer = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  /* border: solid 1px red; */
   width: 90%;
   margin-top: 30px;
   input {
@@ -45,7 +44,6 @@ export const InputContainer = styled.div`
 `;
 
 export const WeatherDetails = styled.div`
-  /* border: solid 1px blue; */
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
@@ -86,7 +84,6 @@ export const DateandUser = styled.div`
 
 export const Test = styled.div`
   display: flex;
-  /* border: 1px solid black; */
   width: 150px;
   justify-content: space-between;
   p {
