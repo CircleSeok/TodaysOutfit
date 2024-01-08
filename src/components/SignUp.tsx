@@ -1,4 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useCallback,
+} from 'react';
 import { auth, createUser, signIn, signInWithGoogle } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
@@ -33,7 +39,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
     });
 
     return () => unsubscribe();
-  }, [auth]);
+  }, []);
 
   // const handleAuth = (e: FormEvent) => {
   //   e.preventDefault();
@@ -58,28 +64,31 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
   //   }
   // };
 
-  const handleAuth = (e: FormEvent) => {
-    e.preventDefault();
-    if (isLogin) {
-      signIn(email, password)
-        .then(() => {
-          console.log('로그인 성공');
-          setModalOpen(false);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    } else {
-      createUser(email, password, nickname)
-        .then(() => {
-          console.log('회원가입 성공');
-          setModalOpen(false);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    }
-  };
+  const handleAuth = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      if (isLogin) {
+        signIn(email, password)
+          .then(() => {
+            console.log('로그인 성공');
+            setModalOpen(false);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      } else {
+        createUser(email, password, nickname)
+          .then(() => {
+            console.log('회원가입 성공');
+            setModalOpen(false);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    },
+    [isLogin, email, password, nickname]
+  );
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { fetchClothesData } from '../api/firebase';
 import { getOutfitByCategory } from '../components/WeatherUtils';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 export interface ClothesItem {
   id: string;
@@ -20,6 +21,7 @@ const Container = styled.div`
   flex-direction: column;
   margin: 0 auto;
   align-items: flex-start;
+
   @media (max-width: 720px) {
     width: 720px;
     h3 {
@@ -150,6 +152,11 @@ const ClothesRecommend: React.FC = () => {
 
   return (
     <Container>
+      <Navbar
+        categories={['전체', '아우터', '상의', '하의']}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryClick}
+      />
       <h1>여러가지 옷을 추천해드려요</h1>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>

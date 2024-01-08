@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { fetchLeisureData } from '../api/firebase';
 import { translateCategory } from '../components/WeatherUtils';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 interface LeisureItem {
   id: string;
@@ -157,6 +158,11 @@ const LeisureRecommend: React.FC = () => {
 
   return (
     <Container>
+      <Navbar
+        categories={['전체', '봄', '여름', '가을', '겨울']}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryClick}
+      />
       <h1>여러가지 레저를 추천해드려요</h1>
       <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>

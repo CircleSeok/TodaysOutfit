@@ -88,6 +88,7 @@ export const Test = styled.div`
   justify-content: space-between;
   p {
     margin-right: 20px;
+    color: black;
   }
 `;
 

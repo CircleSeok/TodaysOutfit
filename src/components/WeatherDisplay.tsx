@@ -39,10 +39,12 @@ const WeatherDisplay: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date();
   const [cityName, setCityName] = useState<string>('');
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
   const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
+  const setUser = useWeatherStore((state) => state.setUser);
+  const user = useWeatherStore((state) => state.user);
   const isModalOpen = ModalStore((state) => state.isModalOpen);
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 

@@ -1,50 +1,60 @@
 import React, { useState } from 'react';
-import { fetchWeatherData } from '../api/api';
-import { GiClothes } from 'react-icons/gi';
 import useWeatherStore from '../store/WeatherStore';
-import {
-  NavbarContainer,
-  NavbarLeft,
-  NavbarMiddle,
-  NavbarRight,
-} from './NavbarStyles';
 
-export default function Navbar() {
-  const [cityName, setCityName] = useState<string>('');
-  const setWeatherData = useWeatherStore((state) => state.setWeatherData);
+interface NavbarProps {
+  categories: string[];
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const data = await fetchWeatherData(cityName || '서울');
-      setWeatherData(data);
-    } catch (error) {
-      console.error('날씨 정보를 불러올 수 없습니다.', error);
-    }
-  };
+const Navbar: React.FC<NavbarProps> = ({
+  categories,
+  selectedCategory,
+  onCategoryChange,
+}) => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCityName(e.target.value);
+  const user = useWeatherStore((state) => state.user);
+  const handleCategoryChange = (category: string) => {
+    onCategoryChange(category);
+    setDropdownOpen(false);
   };
 
   return (
-    <NavbarContainer>
-      <NavbarLeft>
-        <h1>오늘 뭐 입지?</h1>
-      </NavbarLeft>
-      <NavbarMiddle>
-        <form onSubmit={handleSubmit}>
-          <input
-            type='text'
-            placeholder='도시 이름을 입력하고 엔터'
-            value={cityName}
-            onChange={handleChange}
-          />
-        </form>
-      </NavbarMiddle>
-      <NavbarRight>
-        <GiClothes />
-      </NavbarRight>
-    </NavbarContainer>
+    <nav>
+      <ul>
+        <li>
+          <div className='dropdown'>
+            <button
+              className='dropbtn'
+              onClick={() => setDropdownOpen(!isDropdownOpen)}
+            >
+              {selectedCategory}
+            </button>
+            {isDropdownOpen && (
+              <div className='dropdown-content'>
+                {categories.map((category, index) => (
+                  <span
+                    key={index}
+                    onClick={() => handleCategoryChange(category)}
+                    className={selectedCategory === category ? 'active' : ''}
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </li>
+        {/* <li>{메인페이지 버튼}</li> */}
+        <li>
+          <div>
+            <span>{user?.displayName}</span>
+          </div>
+        </li>
+      </ul>
+    </nav>
   );
-}
+};
+
+export default Navbar;
