@@ -4,6 +4,7 @@ import { AllLeisureData } from '../api/firebase';
 import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
 import { LeisureItem } from '../components/Leisure';
+import RouterButton from '../components/RouterButton';
 
 const Container = styled.div`
   width: 1080px;
@@ -158,6 +159,7 @@ const LeisureDetail: React.FC = () => {
 
   return (
     <Container>
+      <RouterButton />
       <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />

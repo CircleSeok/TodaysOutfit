@@ -164,13 +164,13 @@ const LeisureRecommend: React.FC = () => {
         onCategoryChange={handleCategoryClick}
       />
       <h1>여러가지 레저를 추천해드려요</h1>
-      <ButtonsContainer>
+      {/* <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('봄')}>봄</button>
         <button onClick={() => handleCategoryClick('여름')}>여름</button>
         <button onClick={() => handleCategoryClick('가을')}>가을</button>
         <button onClick={() => handleCategoryClick('겨울')}>겨울</button>
-      </ButtonsContainer>
+      </ButtonsContainer> */}
       <h3>원하는 레저 찾아보세요</h3>
       <ItemContainer>
         {leisureData.map((item, index) => (

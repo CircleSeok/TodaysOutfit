@@ -22,6 +22,7 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyles />
+
       <Router />
     </BrowserRouter>
   );

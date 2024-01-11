@@ -4,6 +4,7 @@ import { AllClothesData } from '../api/firebase';
 import { ClothesItem } from '../components/ClothesList';
 import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
+import RouterButton from '../components/RouterButton';
 
 const Container = styled.div`
   width: 1080px;
@@ -170,6 +171,7 @@ const ClothesDetail: React.FC = () => {
 
   return (
     <Container>
+      <RouterButton />
       <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />

@@ -158,12 +158,12 @@ const ClothesRecommend: React.FC = () => {
         onCategoryChange={handleCategoryClick}
       />
       <h1>여러가지 옷을 추천해드려요</h1>
-      <ButtonsContainer>
+      {/* <ButtonsContainer>
         <button onClick={() => handleCategoryClick('전체')}>전체</button>
         <button onClick={() => handleCategoryClick('아우터')}>아우터</button>
         <button onClick={() => handleCategoryClick('상의')}>상의</button>
         <button onClick={() => handleCategoryClick('하의')}>하의</button>
-      </ButtonsContainer>
+      </ButtonsContainer> */}
       <h3>원하는 옷을 찾아보세요</h3>
       <ItemContainer>
         {clothesData.map((item, index) => (
