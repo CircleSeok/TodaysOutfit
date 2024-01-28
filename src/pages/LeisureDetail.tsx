@@ -28,7 +28,7 @@ const MainImage = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid black;
+  border: 1px solid #999;
 `;
 
 const ClothesContainer = styled.div`
@@ -44,7 +44,7 @@ const ClothesContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid #999;
   }
   @media (max-width: 720px) {
     justify-content: space-around;
@@ -159,7 +159,6 @@ const LeisureDetail: React.FC = () => {
 
   return (
     <Container>
-      <RouterButton />
       <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />

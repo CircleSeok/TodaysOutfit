@@ -16,20 +16,21 @@ import {
   Title,
   CloseButton,
   AuthToggle,
+  ErrorMessage,
 } from './SignUpStyles';
 import ModalStore from '../store/ModalStore';
-import styled from 'styled-components';
 
 interface SignUpProps {
   redirectPath: string;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
+const SignUp: React.FC<SignUpProps> = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [nickname, setNickname] = useState('');
   const [isLogin, setIsLogin] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 
@@ -41,55 +42,39 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
     return () => unsubscribe();
   }, []);
 
-  // const handleAuth = (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (isLogin) {
-  //     signIn(email, password)
-  //       .then(() => {
-  //         console.log('로그인 성공');
-  //         setModalOpen(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error.message);
-  //       });
-  //   } else {
-  //     createUser(email, password, nickname)
-  //       .then(() => {
-  //         console.log('회원가입 성공');
-  //         setModalOpen(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error.message);
-  //       });
-  //   }
-  // };
-
   const handleAuth = useCallback(
-    (e: FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
+      setErrorMessage(''); // 초기화
+
       if (isLogin) {
-        signIn(email, password)
-          .then(() => {
-            console.log('로그인 성공');
-            setModalOpen(false);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        try {
+          await signIn(email, password);
+          console.log('로그인 성공');
+          setModalOpen(false);
+        } catch (error) {
+          setErrorMessage('이메일이나 비밀번호를 다시 확인해주세요.');
+
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 2000);
+        }
       } else {
-        createUser(email, password, nickname)
-          .then(() => {
-            console.log('회원가입 성공');
-            setModalOpen(false);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        try {
+          await createUser(email, password, nickname);
+          console.log('회원가입 성공');
+          setModalOpen(false);
+        } catch (error) {
+          setErrorMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
+
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 2000);
+        }
       }
     },
     [isLogin, email, password, nickname]
   );
-
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -140,6 +125,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
                 onChange={handleNicknameChange}
               />
             )}
+
             <button type='submit'>{buttonText}</button>
             <button onClick={signInWithGoogle}>
               구글 아이디로 {buttonText}
@@ -152,6 +138,7 @@ const SignUp: React.FC<SignUpProps> = ({ redirectPath }) => {
                 <AuthToggle isLogin={isLogin}>로그인</AuthToggle>
               )}
             </p>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </FormContainer>
         </Container>
       </ModalContent>

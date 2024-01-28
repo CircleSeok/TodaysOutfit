@@ -14,7 +14,7 @@ const ButtonContainer = styled.div`
 
   button {
     background-color: transparent;
-    color: #333;
+    color: black;
     font-size: inherit;
     border: none;
     cursor: pointer;
@@ -23,7 +23,7 @@ const ButtonContainer = styled.div`
   }
 
   button:hover {
-    background-color: #ddd;
+    background-color: #5f6063;
   }
 
   span {

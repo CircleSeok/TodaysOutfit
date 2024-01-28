@@ -170,3 +170,48 @@ export async function AllLeisureData(): Promise<LeisureItem[]> {
 }
 
 //comments
+
+//배경이미지
+export async function getWeatherImageFromFirestore(
+  temp: number,
+  rain: number | undefined,
+  snow: number | undefined
+): Promise<string | null> {
+  const db = getFirestore();
+
+  const q = query(collection(db, 'weatherBackgrounds'));
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    for (const doc of querySnapshot.docs) {
+      const data = doc.data();
+
+      if (rain && data.name === 'rain') {
+        console.log('Rain Image:', data.imageURL);
+        return data.imageURL;
+      } else if (snow && data.name === 'snow') {
+        console.log('Snow Image:', data.imageURL);
+        return data.imageURL;
+      } else if (temp >= 28 && data.name === 'hot') {
+        console.log('Hot Image:', data.imageURL);
+        return data.imageURL;
+      } else if (temp >= 23 && data.name === 'warm') {
+        console.log('Warm Image:', data.imageURL);
+        return data.imageURL;
+      } else if (temp >= 12 && data.name === 'fall') {
+        console.log('Fall Image:', data.imageURL);
+        return data.imageURL;
+      } else if (data.name === 'cold') {
+        console.log('Cold Image:', data.imageURL);
+        return data.imageURL;
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Firestore에서 날씨 배경을 불러오는 중 오류 발생:', error);
+    console.log('Default Image (Error):', '기본/image-url.jpg');
+    return null;
+  }
+}

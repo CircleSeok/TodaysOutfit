@@ -7,6 +7,7 @@ import { useComments } from '../hooks/CommenUtils';
 import RouterButton from '../components/RouterButton';
 
 const Container = styled.div`
+  /* border: 1px solid blue; */
   width: 1080px;
   margin: 0 auto;
   display: flex;
@@ -32,13 +33,15 @@ const MainImage = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid black;
+  border: 1px solid #999;
 `;
 const ClothesContainer = styled.div`
   /* display: flex;
   justify-content: space-between;
   margin-top: 20px;
   flex-basis: calc(25% - 20px); */
+  /* width: 1080px; */
+  /* border: 1px solid red; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -50,7 +53,7 @@ const ClothesContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid #999;
   }
   @media (max-width: 720px) {
     justify-content: space-around;
@@ -88,11 +91,19 @@ const CommentInput = styled.input`
   width: 100%;
   height: 70%;
   margin-bottom: 10px;
+  font-size: 15px;
 `;
 
 const CommentButton = styled.button`
+  background-color: #5383e8;
+  color: white;
   width: 60%;
   height: 30%;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 300;
+  cursor: pointer;
 `;
 
 const CommentContainer = styled.div`
@@ -105,9 +116,13 @@ const CommentContainer = styled.div`
 
 const CommentItem = styled.div`
   border: 1px solid black;
+  border-radius: 5px;
   margin-bottom: 10px;
   width: calc(50% - 5px);
   box-sizing: border-box;
+  P {
+    margin-left: 10px;
+  }
 `;
 
 interface ClothesDetailProps {
@@ -171,7 +186,6 @@ const ClothesDetail: React.FC = () => {
 
   return (
     <Container>
-      <RouterButton />
       <h1>{itemName}</h1>
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />
@@ -194,7 +208,8 @@ const ClothesDetail: React.FC = () => {
           type='text'
           value={commentText}
           onChange={handleCommentChange}
-          placeholder='댓글을 입력하세요'
+          placeholder='댓글을 입력하세요 10자 이내'
+          maxLength={10}
         />
         <CommentButton type='submit'>댓글 작성</CommentButton>
       </InputWrap>

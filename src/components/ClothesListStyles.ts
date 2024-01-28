@@ -7,6 +7,7 @@ export const ClothesListContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+
   @media screen and (max-width: 720px) {
     width: 720px;
 
@@ -27,7 +28,7 @@ export const ClothesItemContainer = styled.div`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border: 1px solid black;
+    border: 1px solid #999;
     border-radius: 20px;
   }
   @media screen and (max-width: 720px) {
@@ -58,9 +59,10 @@ export const MoreButton = styled.button`
   height: 60px;
   margin-top: 20px;
   color: white;
-  background-color: #18a0fb;
+  background-color: #5383e8;
   border: none;
   border-radius: 10px;
+  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {

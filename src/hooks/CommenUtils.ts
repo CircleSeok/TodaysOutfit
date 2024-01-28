@@ -55,6 +55,11 @@ export const useComments = (postType: string, postId: string) => {
     try {
       const userId = auth.currentUser?.uid;
 
+      if (commentText.length === 0) {
+        console.log('댓글을 입력하세요.');
+        return;
+      }
+
       await addDoc(collection(db, 'comments'), {
         userId: userId,
         postType: postType,

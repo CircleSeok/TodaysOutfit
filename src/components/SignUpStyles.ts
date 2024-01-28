@@ -29,6 +29,11 @@ export const Container = styled.div`
   margin-top: 70px;
 `;
 
+export const ErrorMessage = styled.p`
+  color: red;
+  margin: 10px 0;
+`;
+
 export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -53,13 +58,18 @@ export const FormContainer = styled.form`
     margin-top: 56px;
   }
 
+  p + button {
+    margin-top: 115px;
+  }
+
   button {
     width: 500px;
     height: 80px;
     border-radius: 12px;
-    background-color: #4a90e2;
+    background-color: #5383e8;
     border: none;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
     color: white;
     cursor: pointer;
   }
@@ -74,7 +84,7 @@ export const FormContainer = styled.form`
 `;
 
 export const AuthToggle = styled.span<{ isLogin: boolean }>`
-  color: ${(props) => (props.isLogin ? '#4a90e2' : '#4a90e2')};
+  color: ${(props) => (props.isLogin ? '#5383E8' : '#5383E8')};
 `;
 
 export const LogoContainer = styled.div`
@@ -96,6 +106,6 @@ export const CloseButton = styled(IoMdClose)`
   top: 60px;
   right: 670px;
   cursor: pointer;
-  font-size: 18px;
-  color: #4a90e2;
+  font-size: 30px;
+  color: #5383e8;
 `;

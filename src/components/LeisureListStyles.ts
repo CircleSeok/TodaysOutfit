@@ -6,6 +6,7 @@ export const LeisureListContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+
   /* border: 1px solid red; */
   @media screen and (max-width: 720px) {
     width: 720px;
@@ -28,7 +29,7 @@ export const LeisureItemContainer = styled.div`
     height: 300px;
     width: 100%;
     object-fit: cover;
-    border: 1px solid black;
+    border: 1px solid #999;
     border-radius: 20px;
   }
   /* border: 1px solid green; */
@@ -58,9 +59,10 @@ export const MoreButton = styled.button`
   margin-top: 20px;
   color: white;
   /* border: 1px solid #9f9b9b; */
-  background-color: #18a0fb;
+  background-color: #5383e8;
   border: none;
   border-radius: 10px;
+  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {

@@ -75,6 +75,7 @@ export const WeatherInfo = styled.div`
 `;
 
 export const DateandUser = styled.div`
+  margin-top: 25px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -87,19 +88,20 @@ export const Test = styled.div`
   width: 150px;
   justify-content: space-between;
   p {
+    /* margin-top: 30px; */
     margin-right: 20px;
-    color: black;
+    color: white;
   }
 `;
 
 export const StyledLogoutIcon = styled(IoLogOutSharp)`
-  margin-top: 40px;
+  margin-top: 35px;
   color: red;
   font-size: 30px;
 `;
 
 export const StyledLoginIcon = styled(IoLogInSharp)`
-  margin-top: 40px;
+  margin-top: 35px;
   color: green;
   font-size: 30px;
 `;
@@ -136,6 +138,7 @@ export const CityandTemp = styled.div`
 interface WeatherBackgroundProps {
   backgroundimage: string;
 }
+
 export const WeatherBackground = styled.div<WeatherBackgroundProps>`
   background-image: url(${(props) => props.backgroundimage});
   background-size: cover;
@@ -146,6 +149,8 @@ export const WeatherBackground = styled.div<WeatherBackgroundProps>`
   color: white;
   font-size: 30px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   @media screen and (max-width: 720px) {
     font-size: 18px;
   }

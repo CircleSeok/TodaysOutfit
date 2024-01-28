@@ -26,7 +26,11 @@ import { GiClothes } from 'react-icons/gi';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
-import { auth, signOutUser } from '../api/firebase';
+import {
+  auth,
+  getWeatherImageFromFirestore,
+  signOutUser,
+} from '../api/firebase';
 import { scroller } from 'react-scroll';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { IoLogOutSharp, IoLogInSharp } from 'react-icons/io5';
@@ -53,9 +57,10 @@ const WeatherDisplay: React.FC = () => {
       e.preventDefault();
       try {
         const data = await fetchWeatherData(cityName);
+        // console.log('Weather API Response:', data);
         setWeatherData(data);
       } catch (error) {
-        console.error('날씨 정보를 불러올 수 없습니다.', error);
+        // console.error('날씨 정보를 불러올 수 없습니다.', error);
       }
     },
     [cityName, setWeatherData]
@@ -82,20 +87,39 @@ const WeatherDisplay: React.FC = () => {
   // };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(auth.currentUser);
-      setUser(user);
-    });
+    // ...
 
-    if (weatherData) {
-      const temp = weatherData.main.temp;
-      const rain = weatherData.rain?.['1h'];
-      const snow = weatherData.snow?.['1h'];
-      const image = getWeatherImage(temp, rain, snow);
-      setBackgroundImage(image);
-    }
-    return () => unsubscribe();
-  }, [weatherData]);
+    const fetchData = async () => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        setUser(user);
+      });
+
+      if (weatherData) {
+        const temp = weatherData.main.temp;
+        const rain = weatherData.rain?.['1h'];
+        const snow = weatherData.snow?.['1h'];
+
+        try {
+          const image = await getWeatherImageFromFirestore(temp, rain, snow);
+          // null 체크를 수행하고 이미지가 있다면 setBackgroundImage에 전달합니다.
+          if (image !== null) {
+            setBackgroundImage(image);
+            console.log(image);
+          } else {
+            // 이미지가 null인 경우에는 기본 이미지를 설정합니다.
+            setBackgroundImage('기본/image-url.jpg');
+          }
+        } catch (error) {
+          console.error('배경 이미지를 가져오는 중 오류 발생:', error);
+          setBackgroundImage('기본/image-url.jpg');
+        }
+      }
+
+      return () => unsubscribe();
+    };
+
+    fetchData();
+  }, [weatherData, setBackgroundImage, setUser]);
 
   if (!weatherData) {
     return <p>날씨 정보를 불러오는 중입니다...</p>;
