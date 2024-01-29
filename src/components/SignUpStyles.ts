@@ -19,6 +19,10 @@ export const ModalContent = styled.div`
   background-color: white;
   border-radius: 12px;
   padding: 20px;
+  @media screen and (max-width: 720px) {
+    width: 50%;
+    height: 65%;
+  }
 `;
 
 export const Container = styled.div`
@@ -81,24 +85,71 @@ export const FormContainer = styled.form`
   button + p {
     margin-top: 50px;
   }
+  @media screen and (max-width: 720px) {
+    input {
+      width: 300px;
+      height: 50px;
+      border-radius: 12px;
+      border: 1px solid #8f8f8f;
+      background-color: #f9f9f9;
+    }
+    input + input {
+      margin-top: 18px;
+    }
+
+    input:nth-child(2) + button {
+      margin-top: 110px;
+    }
+
+    input:nth-child(3) + button {
+      margin-top: 42px;
+    }
+
+    p + button {
+      margin-top: 115px;
+    }
+
+    button {
+      width: 300px;
+      height: 50px;
+      border-radius: 12px;
+      background-color: #5383e8;
+      border: none;
+      font-size: 20px;
+      font-weight: 500;
+      color: white;
+      cursor: pointer;
+    }
+
+    button + button {
+      margin-top: 18px;
+    }
+
+    button + p {
+      margin-top: 20px;
+    }
+  }
 `;
 
 export const AuthToggle = styled.span<{ isLogin: boolean }>`
   color: ${(props) => (props.isLogin ? '#5383E8' : '#5383E8')};
 `;
 
-export const LogoContainer = styled.div`
-  background-image: url('/asset/Logo.png');
-  width: 20%;
-  height: 10%;
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin-bottom: 20px;
-`;
+// export const LogoContainer = styled.div`
+//   background-image: url('/asset/Logo.png');
+//   width: 20%;
+//   height: 10%;
+//   background-repeat: no-repeat;
+//   background-size: contain;
+//   margin-bottom: 20px;
+// `;
 
 export const Title = styled.div`
   margin-bottom: 109px;
   font-size: 40px;
+  @media screen and (max-width: 720px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const CloseButton = styled(IoMdClose)`
@@ -108,4 +159,9 @@ export const CloseButton = styled(IoMdClose)`
   cursor: pointer;
   font-size: 30px;
   color: #5383e8;
+
+  @media screen and (max-width: 720px) {
+    top: 170px;
+    right: 185px;
+  }
 `;
