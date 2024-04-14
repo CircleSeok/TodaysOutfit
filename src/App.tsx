@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Weather from './components/Weather';
 import Router from './routes/Router';
 import { BrowserRouter } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { Global, css } from '@emotion/react';
 
-const GlobalStyles = createGlobalStyle`
+const globalStyles = css`
   @font-face {
     font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+      format('woff');
     font-weight: 400;
     font-style: normal;
   }
@@ -17,14 +18,14 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: 'Pretendard-Regular', Arial, sans-serif;
+    font-family: 'Pretendard-Regular';
   }
 `;
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyles />
+      <Global styles={globalStyles} />
       <Router />
     </BrowserRouter>
   );

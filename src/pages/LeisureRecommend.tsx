@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import { fetchLeisureData } from '../api/firebase';
-import { translateCategory } from '../components/WeatherUtils';
-import { Link, useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-
+import { translateCategory } from '../hooks/WeatherUtils';
+import { Link } from 'react-router-dom';
 import {
   ButtonsContainer,
   Container,
   ItemContainer,
   ItemWrapper,
-} from './ClothesRecommendStyles';
-
-interface LeisureItem {
-  id: string;
-  name: string;
-  category: string;
-  imageURL: string;
-  description: string;
-}
+} from './RecommendStyles';
+import { LeisureItem } from '../types/LeisureItem';
 
 const LeisureRecommend: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
@@ -116,8 +107,8 @@ const LeisureRecommend: React.FC = () => {
       </ButtonsContainer>
       <h3>원하는 레저 찾아보세요</h3>
       <ItemContainer>
-        {leisureData.map((item, index) => (
-          <ItemWrapper key={index}>
+        {leisureData.map((item) => (
+          <ItemWrapper key={uuidv4()}>
             <Link
               to={`/leisurerecommend/${encodeURIComponent(item.name)}`}
               state={{

@@ -1,113 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AllLeisureData } from '../api/firebase';
-import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
-import { LeisureItem } from '../components/Leisure';
-import RouterButton from '../components/RouterButton';
-
-const Container = styled.div`
-  width: 1080px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  @media (max-width: 720px) {
-    width: 720px;
-  }
-`;
-
-const MainImgWrap = styled.div`
-  width: 60%;
-  height: 690px;
-`;
-
-const MainImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  border: 1px solid #999;
-`;
-
-const ClothesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  img {
-    height: 350px;
-    width: 100%;
-    object-fit: cover;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border-radius: 8px;
-    border: 1px solid #999;
-  }
-  @media (max-width: 720px) {
-    justify-content: space-around;
-  }
-`;
-
-const Test = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
-  flex-basis: 250px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    transform: translateY(-5px) scale(1);
-  }
-  /* flex-basis: calc(25% - 20px); */
-
-  p {
-    margin-top: 10px;
-  }
-`;
-
-const InputWrap = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 150px;
-  margin-top: 20px;
-`;
-
-const CommentInput = styled.input`
-  width: 100%;
-  height: 70%;
-  margin-bottom: 10px;
-`;
-
-const CommentButton = styled.button`
-  width: 60%;
-  height: 30%;
-`;
-
-const CommentContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-`;
-
-const CommentItem = styled.div`
-  border: 1px solid black;
-  margin-bottom: 10px;
-  width: calc(50% - 5px);
-  box-sizing: border-box;
-`;
+import {
+  ClothesContainer,
+  CommentButton,
+  CommentContainer,
+  CommentInput,
+  CommentItem,
+  Container,
+  InputWrap,
+  MainImage,
+  MainImgWrap,
+  RecommendationList,
+} from './DetailStyles';
+import { LeisureItem } from '../types/LeisureItem';
 
 const LeisureDetail: React.FC = () => {
-  const location: any = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const { itemName, imageURL, itemDescription } = location.state;
+  const { itemName, imageURL } = location.state;
   const [randomLeisures, setRandomLeisures] = useState<LeisureItem[]>([]);
 
   const { comments, commentText, handleCommentChange, onSubmitComment } =
@@ -163,15 +76,17 @@ const LeisureDetail: React.FC = () => {
       <MainImgWrap>
         <MainImage src={imageURL} alt={itemName} />
       </MainImgWrap>
-      {/* <p>{itemDescription}</p> */}
 
       <h3>추천 레저</h3>
       <ClothesContainer>
-        {randomLeisures.map((item, index) => (
-          <Test key={index} onClick={() => handleItemClick(item)}>
+        {randomLeisures.map((item) => (
+          <RecommendationList
+            key={uuidv4()}
+            onClick={() => handleItemClick(item)}
+          >
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
-          </Test>
+          </RecommendationList>
         ))}
       </ClothesContainer>
 

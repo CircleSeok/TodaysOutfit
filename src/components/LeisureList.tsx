@@ -8,20 +8,14 @@ import {
   DownScrollWrap,
   UpScrollWrap,
 } from './LeisureListStyles';
+import { v4 as uuidv4 } from 'uuid';
 import useWeatherStore from '../store/WeatherStore';
-import { getSeason } from './WeatherUtils';
 import { useNavigate } from 'react-router-dom';
 import ModalStore from '../store/ModalStore';
 import SignUp from './SignUp';
 import { scroller } from 'react-scroll';
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa';
-export interface LeisureItem {
-  id: string;
-  name: string;
-  category: string;
-  imageURL: string;
-  description: string;
-}
+import { LeisureItem } from '../types/LeisureItem';
 
 export default function Leisure() {
   const [leisureData, setLeisureData] = useState<LeisureItem[]>([]);
@@ -29,7 +23,6 @@ export default function Leisure() {
   const isModalOpen = ModalStore((state) => state.isModalOpen);
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
   const navigate = useNavigate();
-  const weatherData = useWeatherStore((state) => state.weatherData);
 
   const handleResize = () => {
     if (window.innerWidth <= 730) {
@@ -42,13 +35,19 @@ export default function Leisure() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (weatherData) {
-          const leisurecategory = getSeason(weatherData.main.temp);
-          // console.log('리턴받는 배열', leisurecategory);
-          const data = await fetchLeisureData(leisurecategory);
-          // console.log(data);
-          setLeisureData(data);
+        const currentMonth = new Date().getMonth() + 1;
+        let leisurecategory = '';
+        if (currentMonth >= 3 && currentMonth <= 5) {
+          leisurecategory = 'spring';
+        } else if (currentMonth >= 6 && currentMonth <= 8) {
+          leisurecategory = 'summer';
+        } else if (currentMonth >= 9 && currentMonth <= 10) {
+          leisurecategory = 'fall';
+        } else {
+          leisurecategory = 'winter';
         }
+        const data = await fetchLeisureData([leisurecategory]);
+        setLeisureData(data);
       } catch (error) {
         console.log('데이터 가져오기 중 에러 발생:', error);
       }
@@ -60,7 +59,7 @@ export default function Leisure() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [weatherData]);
+  }, []);
 
   const openModal = () => {
     const currentuser = auth.currentUser;
@@ -92,24 +91,19 @@ export default function Leisure() {
       <UpScrollWrap>
         <FaAngleDoubleUp onClick={backToPreviousSection} />
       </UpScrollWrap>
-
       <h2>여가활동 추천</h2>
-      {/* <p>{weatherData?.main.temp}</p> */}
       <LeisureWrap>
-        {leisureData.slice(0, displayedItems).map((item, index) => (
-          <LeisureItemContainer key={index}>
+        {leisureData.slice(0, displayedItems).map((item) => (
+          <LeisureItemContainer key={uuidv4()}>
             <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
           </LeisureItemContainer>
         ))}
       </LeisureWrap>
       <MoreButton onClick={openModal}>더 많은 레저 보기</MoreButton>
-      {/* <button onClick={openWeatherSection}>weather로</button>
-      <button onClick={backToPreviousSection}>이전 화면으로</button> */}
       <DownScrollWrap>
         <FaAngleDoubleDown onClick={openWeatherSection} />
       </DownScrollWrap>
-
       {isModalOpen && <SignUp redirectPath='/leisure' />}
     </LeisureListContainer>
   );

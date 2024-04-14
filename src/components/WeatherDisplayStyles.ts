@@ -1,5 +1,6 @@
-import styled, { css, CSSObject } from 'styled-components';
+import styled from '@emotion/styled';
 import { IoLogOutSharp, IoLogInSharp } from 'react-icons/io5';
+
 export const WeatherDataContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   flex: 3;
@@ -80,16 +81,14 @@ export const DateandUser = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
 `;
 
-export const Test = styled.div`
+export const LogInLogOutBtn = styled.div`
   display: flex;
   width: 150px;
   justify-content: space-between;
   p {
-    /* margin-top: 30px; */
-    margin-right: 20px;
+    margin-right: 50px;
     color: white;
   }
 `;
@@ -173,7 +172,7 @@ export const DownBtn = styled.div`
   display: flex;
   justify-content: center;
   margin-left: 280px;
-  /* margin-bottom: 10px; */
+
   margin-bottom: auto;
   position: relative;
   cursor: pointer;

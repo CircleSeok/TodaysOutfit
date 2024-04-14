@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import useWeatherStore from '../store/WeatherStore';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../api/firebase';
 import useNavigateUtil from '../hooks/NavigatUtils';
-
-interface RouterButtonProps {}
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -20,10 +18,10 @@ const ButtonContainer = styled.div`
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-right: 10px;
-  }
 
-  button:hover {
-    background-color: #5f6063;
+    &:hover {
+      background-color: #5f6063;
+    }
   }
 
   span {
@@ -31,14 +29,13 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const RouterButton: React.FC<RouterButtonProps> = () => {
+const RouterButton: React.FC = () => {
   const user = useWeatherStore((state) => state.user);
   const setUser = useWeatherStore((state) => state.setUser);
   const { handleNavigate } = useNavigateUtil();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      //이부분 display도 사용중이니 훅으로 만들기
     });
 
     return () => unsubscribe();

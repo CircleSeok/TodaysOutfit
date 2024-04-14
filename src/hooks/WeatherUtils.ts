@@ -1,42 +1,8 @@
-// export function transformCityName(cityName: string): string {
-//   const cityMappings: { [key: string]: string } = {
-//     seoul: '서울',
-//     busan: '부산',
-//     incheon: '인천',
-//     daegu: '대구',
-//     ulsan: '울산',
-//     suwon: '수원',
-//     daejeon: '대전',
-//   };
-
-//   return cityMappings[cityName.toLowerCase()] || cityName;
-// }
-
-export function getWeatherImage(
-  temp: number,
-  rain: number | undefined,
-  snow: number | undefined
-): string {
-  if (rain) {
-    return 'asset/Rain-img.jpg';
-  } else if (snow) {
-    return 'asset/Snow-img.jpg';
-  } else if (temp >= 28) {
-    return 'asset/Hot-img.jpg';
-  } else if (temp >= 23) {
-    return 'asset/Warm-img.jpg';
-  } else if (temp >= 12) {
-    return 'asset/Fall-img.jpg';
-  } else {
-    return 'asset/Cold-img.jpg';
-  }
-}
-
 export function getWeatherOutfit(temp: number): string[] {
   if (temp > 28) {
-    return ['민소매', '반팔티', '반바지', '린넨'];
+    return ['민소매', '반팔', '반바지', '린넨'];
   } else if (temp >= 23 && temp <= 27.9) {
-    return ['반팔티', '린넨 셔츠', '롱슬리브', '반바지', '면바지'];
+    return ['반팔티', '린넨셔츠', '롱슬리브', '반바지', '면바지'];
   } else if (temp >= 20 && temp <= 22.9) {
     return ['롱슬리브', '셔츠', '후드티', '면바지', '슬랙스', '청바지'];
   } else if (temp >= 17 && temp <= 19.9) {
@@ -61,20 +27,6 @@ export function getWeatherOutfit(temp: number): string[] {
   }
 }
 
-export function getSeason(temp: number): string[] {
-  if (temp >= -30 && temp < 9) {
-    return ['winter'];
-  } else if (temp >= 9 && temp < 17) {
-    return ['fall'];
-  } else if (temp >= 17 && temp < 23) {
-    return ['spring'];
-  } else if (temp >= 23 && temp < 40) {
-    return ['summer'];
-  } else {
-    return ['알 수 없음'];
-  }
-}
-
 export function getOutfitByCategory(category: string): string[] {
   switch (category) {
     case '아우터':
@@ -91,7 +43,7 @@ export function getOutfitByCategory(category: string): string[] {
     case '상의':
       return [
         '민소매',
-        '반팔티',
+        '반팔',
         '린넨',
         '린넨셔츠',
         '롱슬리브',

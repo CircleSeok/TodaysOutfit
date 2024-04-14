@@ -1,23 +1,15 @@
-// ClothesRecommend.tsx
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { fetchClothesData } from '../api/firebase';
-import { getOutfitByCategory } from '../components/WeatherUtils';
-import { Link, useLocation } from 'react-router-dom';
+import { getOutfitByCategory } from '../hooks/WeatherUtils';
+import { Link } from 'react-router-dom';
 import {
   ButtonsContainer,
   Container,
   ItemContainer,
   ItemWrapper,
-} from './ClothesRecommendStyles';
-import Navbar from '../components/Navbar';
-
-export interface ClothesItem {
-  id: string;
-  name: string;
-  category: string;
-  imageURL: string;
-  description: string;
-}
+} from './RecommendStyles';
+import { ClothesItem } from '../types/ClothesItem';
 
 const ClothesRecommend: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
@@ -25,7 +17,6 @@ const ClothesRecommend: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const handleCategoryClick = (category: string) => {
-    // console.log('Clicked category:', category);
     setSelectedCategory(category);
   };
 
@@ -56,7 +47,6 @@ const ClothesRecommend: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // console.log('Selected category:', selectedCategory);
     window.addEventListener('scroll', handleScroll);
 
     setClothesData([]);
@@ -99,8 +89,8 @@ const ClothesRecommend: React.FC = () => {
       </ButtonsContainer>
       <h3>원하는 옷을 찾아보세요</h3>
       <ItemContainer>
-        {clothesData.map((item, index) => (
-          <ItemWrapper key={index}>
+        {clothesData.map((item) => (
+          <ItemWrapper key={uuidv4()}>
             <Link
               to={`/clothesrecommend/${encodeURIComponent(item.name)}`}
               state={{

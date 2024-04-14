@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { auth, fetchClothesData, signOutUser } from '../api/firebase';
+import { v4 as uuidv4 } from 'uuid';
+import { auth, fetchClothesData } from '../api/firebase';
 import {
   ClothesItemContainer,
   ClothesListContainer,
@@ -9,19 +10,13 @@ import {
   UpScrollWrap,
 } from './ClothesListStyles';
 import useWeatherStore from '../store/WeatherStore';
-import { getWeatherOutfit } from './WeatherUtils';
+import { getWeatherOutfit } from '../hooks/WeatherUtils';
 import { useNavigate } from 'react-router-dom';
-import SignUp from './SignUp';
 import ModalStore from '../store/ModalStore';
-import { Link, scroller } from 'react-scroll';
+import { scroller } from 'react-scroll';
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa';
-export interface ClothesItem {
-  id: string;
-  name: string;
-  category: string;
-  imageURL: string;
-  description: string;
-}
+import { ClothesItem } from '../types/ClothesItem';
+import SignUp from './SignUp';
 
 const ClothesList: React.FC = () => {
   const [clothesData, setClothesData] = useState<ClothesItem[]>([]);
@@ -68,8 +63,6 @@ const ClothesList: React.FC = () => {
       }
       handleResize();
     };
-    // console.log(weatherData);
-    // console.log(clothesData);
     fetchData();
 
     window.addEventListener('resize', handleResize);
@@ -88,37 +81,24 @@ const ClothesList: React.FC = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOutUser();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <ClothesListContainer>
       <UpScrollWrap>
         <FaAngleDoubleUp onClick={backToPreviousSection} />
       </UpScrollWrap>
-
       <h2>옷추천 목록</h2>
-      {/* <p>{weatherData?.main.temp}</p> */}
       <ClothesWrap>
-        {clothesData.slice(0, displayedItems).map((item, index) => (
-          <ClothesItemContainer key={index}>
+        {clothesData.slice(0, displayedItems).map((item) => (
+          <ClothesItemContainer key={uuidv4()}>
             <img src={item.imageURL} alt={item.name} />
             <h3>{item.name}</h3>
           </ClothesItemContainer>
         ))}
       </ClothesWrap>
-
-      {/* <button onClick={handleLogout}>로그아웃</button> */}
       <MoreButton onClick={openModal}>더 많은 옷 보기</MoreButton>
       <DownScrollWrap>
         <FaAngleDoubleDown onClick={openLeisureSection} />
       </DownScrollWrap>
-
       {isModalOpen && <SignUp redirectPath='/clothesList' />}
     </ClothesListContainer>
   );

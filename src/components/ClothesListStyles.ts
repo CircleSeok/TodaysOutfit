@@ -1,5 +1,4 @@
-import { scroller } from 'react-scroll';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const ClothesListContainer = styled.div`
   width: 1080px;
@@ -10,11 +9,9 @@ export const ClothesListContainer = styled.div`
 
   @media screen and (max-width: 720px) {
     width: 720px;
-
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 1px solid red;
   }
 `;
 
@@ -32,15 +29,9 @@ export const ClothesItemContainer = styled.div`
     border-radius: 20px;
   }
   @media screen and (max-width: 720px) {
-    flex-basis: calc(50% - 10px);
-    /* margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column; */
-    border: 1px solid green;
-
+    flex-basis: calc(50%);
+    padding: 0px 5px 0px 5px;
     img {
-      border: 1px solid red;
       height: 200px;
       width: 50%;
       object-fit: cover;

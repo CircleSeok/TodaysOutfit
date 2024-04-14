@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const Container = styled.div`
   width: 1080px;
@@ -8,6 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   margin: 0 auto;
   align-items: flex-start;
+
   @media (max-width: 720px) {
     width: 720px;
     h3 {
@@ -23,8 +24,9 @@ export const ButtonsContainer = styled.div`
   justify-content: flex-start;
   width: 100%;
   button {
-    background-color: #5383e8;
+    background-color: gray;
     font-size: 20px;
+    font-weight: 900;
     color: white;
     width: 100px;
     height: 50px;
@@ -32,11 +34,12 @@ export const ButtonsContainer = styled.div`
     border: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    &:hover {
-      transform: translateY(-5px) scale(1);
-      /* filter: brightness(1.2); */
+    &.active {
+      background-color: #5383e8;
+      color: white;
     }
   }
+
   @media (max-width: 720px) {
     button {
       width: 300px;
@@ -58,9 +61,11 @@ export const ItemWrapper = styled.div`
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+
   &:hover {
     transform: translateY(-5px) scale(1);
   }
+
   img {
     height: 250px;
     width: 250px;
@@ -68,17 +73,20 @@ export const ItemWrapper = styled.div`
     border: 1px solid #999;
     border-radius: 20px;
   }
+
   @media (max-width: 720px) {
     width: calc(50% - 10px);
     margin-bottom: 30px;
-    /* padding: 40px; */
+
     p {
       margin-top: 5px;
     }
+
     img {
       height: 300px;
       width: 90%;
     }
+
     font-size: 25px;
   }
 `;

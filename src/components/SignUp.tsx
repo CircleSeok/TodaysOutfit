@@ -1,12 +1,5 @@
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { auth, createUser, signIn, signInWithGoogle } from '../api/firebase';
-import { useNavigate } from 'react-router-dom';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import {
   ModalContainer,
@@ -19,6 +12,7 @@ import {
   ErrorMessage,
 } from './SignUpStyles';
 import ModalStore from '../store/ModalStore';
+import useWeatherStore from '../store/WeatherStore';
 
 interface SignUpProps {
   redirectPath: string;
@@ -27,11 +21,11 @@ interface SignUpProps {
 const SignUp: React.FC<SignUpProps> = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const setUser = useWeatherStore((state) => state.setUser);
   const [nickname, setNickname] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const navigate = useNavigate();
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 
   useEffect(() => {
@@ -40,41 +34,38 @@ const SignUp: React.FC<SignUpProps> = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [setUser]);
 
-  const handleAuth = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
-      setErrorMessage(''); // 초기화
+  const handleLogin = async () => {
+    setErrorMessage('');
 
-      if (isLogin) {
-        try {
-          await signIn(email, password);
-          console.log('로그인 성공');
-          setModalOpen(false);
-        } catch (error) {
-          setErrorMessage('이메일이나 비밀번호를 다시 확인해주세요.');
+    try {
+      await signIn(email, password);
+      console.log('로그인 성공');
+      setModalOpen(false);
+    } catch (error) {
+      setErrorMessage('이메일이나 비밀번호를 다시 확인해주세요.');
+    }
+  };
 
-          setTimeout(() => {
-            setErrorMessage('');
-          }, 2000);
-        }
-      } else {
-        try {
-          await createUser(email, password, nickname);
-          console.log('회원가입 성공');
-          setModalOpen(false);
-        } catch (error) {
-          setErrorMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
+  const handleSignUp = async () => {
+    if (nickname.length > 4) {
+      setErrorMessage('닉네임은 4글자 이하로 설정해주세요.');
+      return;
+    }
 
-          setTimeout(() => {
-            setErrorMessage('');
-          }, 2000);
-        }
-      }
-    },
-    [isLogin, email, password, nickname]
-  );
+    setErrorMessage('');
+
+    try {
+      await createUser(email, password, nickname);
+      console.log('회원가입 성공');
+      setUser(auth.currentUser);
+      setModalOpen(false);
+    } catch (error) {
+      setErrorMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -97,6 +88,18 @@ const SignUp: React.FC<SignUpProps> = () => {
     setModalOpen(false);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      if (isLogin) {
+        handleLogin();
+      } else {
+        handleSignUp();
+      }
+    }
+  };
+
   return (
     <ModalContainer>
       <ModalContent>
@@ -104,18 +107,20 @@ const SignUp: React.FC<SignUpProps> = () => {
           <CloseButton onClick={handleCloseButtonClick} />
           <Title>{buttonText}</Title>
 
-          <FormContainer onSubmit={handleAuth}>
+          <FormContainer>
             <input
               type='email'
               placeholder='Email'
               value={email}
               onChange={handleEmailChange}
+              onKeyDown={handleKeyPress}
             />
             <input
               type='password'
               placeholder='Password'
               value={password}
               onChange={handlePasswordChange}
+              onKeyDown={handleKeyPress}
             />
             {!isLogin && (
               <input
@@ -123,12 +128,18 @@ const SignUp: React.FC<SignUpProps> = () => {
                 placeholder='Nickname'
                 value={nickname}
                 onChange={handleNicknameChange}
+                onKeyDown={handleKeyPress}
               />
             )}
 
-            <button type='submit'>{buttonText}</button>
-            <button onClick={signInWithGoogle}>
-              구글 아이디로 {buttonText}
+            <button
+              type='button'
+              onClick={isLogin ? handleLogin : handleSignUp}
+            >
+              {isLogin ? '로그인' : '회원가입'}
+            </button>
+            <button type='button' onClick={signInWithGoogle}>
+              구글 아이디로 {isLogin ? '로그인' : '회원가입'}
             </button>
             <p onClick={toggleAuthMode} style={{ cursor: 'pointer' }}>
               {isLogin ? '회원이 아니신가요? ' : '이미 회원이신가요? '}

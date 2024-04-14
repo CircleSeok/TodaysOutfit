@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import WeatherData from '../types/WeatherData';
 import {
   WeatherDataContainer,
   WeatherBackground,
@@ -11,21 +10,14 @@ import {
   WeatherDetails,
   DownBtn,
   DateandUser,
-  Test,
   StyledLogoutIcon,
   StyledLoginIcon,
-} from './Styles';
-import {
-  // transformCityName,
-  getWeatherImage,
-  getWeatherOutfit,
-} from './WeatherUtils';
+  LogInLogOutBtn,
+} from './WeatherDisplayStyles';
+import { getWeatherOutfit } from '../hooks/WeatherUtils';
 import useWeatherStore from '../store/WeatherStore';
 import { fetchWeatherData } from '../api/api';
-import { GiClothes } from 'react-icons/gi';
-import { AiOutlineLogin } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import {
   auth,
   getWeatherImageFromFirestore,
@@ -33,23 +25,16 @@ import {
 } from '../api/firebase';
 import { scroller } from 'react-scroll';
 import { FaAngleDoubleDown } from 'react-icons/fa';
-import { IoLogOutSharp, IoLogInSharp } from 'react-icons/io5';
 import ModalStore from '../store/ModalStore';
-interface WeatherDisplayProps {
-  weatherData: WeatherData | null;
-}
-
+import errorImg from '../assets/error-img.png';
 const WeatherDisplay: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const currentDate = new Date();
   const [cityName, setCityName] = useState<string>('');
-  // const [user, setUser] = useState<User | null>(null);
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
-  const navigate = useNavigate();
   const weatherData = useWeatherStore((state) => state.weatherData);
   const setUser = useWeatherStore((state) => state.setUser);
   const user = useWeatherStore((state) => state.user);
-  const isModalOpen = ModalStore((state) => state.isModalOpen);
   const setModalOpen = ModalStore((state) => state.setIsModalOpen);
 
   const handleSubmit = useCallback(
@@ -57,11 +42,8 @@ const WeatherDisplay: React.FC = () => {
       e.preventDefault();
       try {
         const data = await fetchWeatherData(cityName);
-        // console.log('Weather API Response:', data);
         setWeatherData(data);
-      } catch (error) {
-        // console.error('날씨 정보를 불러올 수 없습니다.', error);
-      }
+      } catch (error) {}
     },
     [cityName, setWeatherData]
   );
@@ -78,19 +60,12 @@ const WeatherDisplay: React.FC = () => {
     }
   };
   const openModal = () => {
-    const currentuser = auth.currentUser;
-
     setModalOpen(true);
   };
-  // const SignupClick = () => {
-  //   navigate('/signup');
-  // };
 
   useEffect(() => {
-    // ...
-
     const fetchData = async () => {
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      onAuthStateChanged(auth, async (user) => {
         setUser(user);
       });
 
@@ -101,21 +76,13 @@ const WeatherDisplay: React.FC = () => {
 
         try {
           const image = await getWeatherImageFromFirestore(temp, rain, snow);
-          // null 체크를 수행하고 이미지가 있다면 setBackgroundImage에 전달합니다.
-          if (image !== null) {
-            setBackgroundImage(image);
-            console.log(image);
-          } else {
-            // 이미지가 null인 경우에는 기본 이미지를 설정합니다.
-            setBackgroundImage('기본/image-url.jpg');
-          }
+          setBackgroundImage(image ?? errorImg);
+          // console.log(image);
         } catch (error) {
           console.error('배경 이미지를 가져오는 중 오류 발생:', error);
-          setBackgroundImage('기본/image-url.jpg');
+          setBackgroundImage(errorImg);
         }
       }
-
-      return () => unsubscribe();
     };
 
     fetchData();
@@ -124,8 +91,6 @@ const WeatherDisplay: React.FC = () => {
   if (!weatherData) {
     return <p>날씨 정보를 불러오는 중입니다...</p>;
   }
-
-  // const city = transformCityName(weatherData.name);
 
   const getDayOfWeek = (date: any) => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -161,16 +126,16 @@ const WeatherDisplay: React.FC = () => {
               {currentDate.getFullYear()} {currentDate.getMonth() + 1}{' '}
               {currentDate.getDate()} ,{getDayOfWeek(currentDate)}
             </p>
-            <Test>
+            <LogInLogOutBtn>
               {user ? (
                 <>
                   <StyledLogoutIcon onClick={handleLogout} />
-                  <p>{user.displayName} 님</p>
+                  <p>{user.displayName}</p>
                 </>
               ) : (
                 <StyledLoginIcon onClick={openModal} />
               )}
-            </Test>
+            </LogInLogOutBtn>
           </DateandUser>
           <LeftBottomContainer>
             <CityandTemp>

@@ -1,5 +1,4 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
   getDocs,
   query,
@@ -23,8 +22,6 @@ export interface Comment {
 export const useComments = (postType: string, postId: string) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentText, setCommentText] = useState('');
-
-  const location = useLocation();
 
   const fetchComments = async () => {
     try {

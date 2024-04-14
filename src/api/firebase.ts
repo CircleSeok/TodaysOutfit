@@ -1,28 +1,25 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import errorImg from '../assets/error-img.png';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
-  onAuthStateChanged,
-  User,
   signOut,
   GoogleAuthProvider,
-  signInWithPopup,
   updateProfile,
+  signInWithRedirect,
 } from 'firebase/auth';
 import {
   getFirestore,
   collection,
   getDocs,
   query,
-  doc,
-  addDoc,
   where,
 } from 'firebase/firestore';
-import { ClothesItem } from '../components/ClothesList';
-import { LeisureItem } from '../components/Leisure';
+
+import { ClothesItem } from '../types/ClothesItem';
+import { LeisureItem } from '../types/LeisureItem';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -38,12 +35,6 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 //회원가입
-// export async function createUser(
-//   email: string,
-//   password: string
-// ): Promise<UserCredential> {
-//   return await createUserWithEmailAndPassword(auth, email, password);
-// }
 
 export async function createUser(
   email: string,
@@ -93,11 +84,11 @@ export async function signOutUser() {
 
 //구글 로그인
 
-export async function signInWithGoogle(): Promise<UserCredential> {
+export async function signInWithGoogle(): Promise<void> {
   try {
+    const auth = getAuth();
     const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    return result;
+    await signInWithRedirect(auth, provider);
   } catch (error) {
     console.error('Google 로그인 중 에러 발생:', error);
     throw error;
@@ -188,30 +179,22 @@ export async function getWeatherImageFromFirestore(
       const data = doc.data();
 
       if (rain && data.name === 'rain') {
-        console.log('Rain Image:', data.imageURL);
         return data.imageURL;
       } else if (snow && data.name === 'snow') {
-        console.log('Snow Image:', data.imageURL);
         return data.imageURL;
-      } else if (temp >= 28 && data.name === 'hot') {
-        console.log('Hot Image:', data.imageURL);
+      } else if (temp >= 24 && data.name === 'hot') {
         return data.imageURL;
-      } else if (temp >= 23 && data.name === 'warm') {
-        console.log('Warm Image:', data.imageURL);
+      } else if (temp >= 17 && temp < 24 && data.name === 'warm') {
         return data.imageURL;
-      } else if (temp >= 12 && data.name === 'fall') {
-        console.log('Fall Image:', data.imageURL);
+      } else if (temp >= 12 && temp < 17 && data.name === 'fall') {
         return data.imageURL;
-      } else if (data.name === 'cold') {
-        console.log('Cold Image:', data.imageURL);
+      } else if (temp < 12 && data.name === 'cold') {
         return data.imageURL;
       }
     }
-
     return null;
   } catch (error) {
     console.error('Firestore에서 날씨 배경을 불러오는 중 오류 발생:', error);
-    console.log('Default Image (Error):', '기본/image-url.jpg');
-    return null;
+    return errorImg;
   }
 }

@@ -3,7 +3,7 @@ import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import SignUp from '../components/SignUp';
 import Main from '../pages/Main';
 import Clothes from '../components/ClothesList';
-import Leisure from '../components/Leisure';
+import Leisure from '../components/LeisureList';
 import ClothesRecommend from '../pages/ClothesRecommend';
 import LeisureRecommend from '../pages/LeisureRecommend';
 import ClothesDetail from '../pages/ClothesDetail';
@@ -20,7 +20,7 @@ function Router() {
 
   const checkAccess = (element: React.ReactElement) => {
     if (!isAuthenticated) {
-      return <Navigate to='/signup' />;
+      return <Navigate to='/' />;
     }
     return (
       <>

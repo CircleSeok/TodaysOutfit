@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const LeisureListContainer = styled.div`
   width: 1080px;
@@ -7,14 +7,11 @@ export const LeisureListContainer = styled.div`
   align-items: center;
   flex-direction: column;
 
-  /* border: 1px solid red; */
   @media screen and (max-width: 720px) {
     width: 720px;
-    /* height: 100vh; */
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 1px solid red;
   }
 `;
 
@@ -24,7 +21,6 @@ export const LeisureItemContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* border: 1px solid green; */
   img {
     height: 300px;
     width: 100%;
@@ -32,14 +28,9 @@ export const LeisureItemContainer = styled.div`
     border: 1px solid #999;
     border-radius: 20px;
   }
-  /* border: 1px solid green; */
   @media screen and (max-width: 720px) {
-    flex-basis: calc(50% - 10px);
-
-    border: 1px solid green;
-
+    flex-basis: calc(50%);
     img {
-      border: 1px solid red;
       height: 200px;
       width: 50%;
       object-fit: cover;
@@ -58,7 +49,6 @@ export const MoreButton = styled.button`
   height: 60px;
   margin-top: 20px;
   color: white;
-  /* border: 1px solid #9f9b9b; */
   background-color: #5383e8;
   border: none;
   border-radius: 10px;

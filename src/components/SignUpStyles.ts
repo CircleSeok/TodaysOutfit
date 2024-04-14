@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { IoMdClose } from 'react-icons/io';
+
 export const ModalContainer = styled.div`
   display: flex;
   align-items: center;
@@ -54,11 +55,11 @@ export const FormContainer = styled.form`
     margin-top: 18px;
   }
 
-  input:nth-child(2) + button {
+  input:nth-of-type(2) + button {
     margin-top: 154px;
   }
 
-  input:nth-child(3) + button {
+  input:nth-of-type(3) + button {
     margin-top: 56px;
   }
 
@@ -97,11 +98,11 @@ export const FormContainer = styled.form`
       margin-top: 18px;
     }
 
-    input:nth-child(2) + button {
+    input:nth-of-type(2) + button {
       margin-top: 110px;
     }
 
-    input:nth-child(3) + button {
+    input:nth-of-type(3) + button {
       margin-top: 42px;
     }
 
@@ -134,15 +135,6 @@ export const FormContainer = styled.form`
 export const AuthToggle = styled.span<{ isLogin: boolean }>`
   color: ${(props) => (props.isLogin ? '#5383E8' : '#5383E8')};
 `;
-
-// export const LogoContainer = styled.div`
-//   background-image: url('/asset/Logo.png');
-//   width: 20%;
-//   height: 10%;
-//   background-repeat: no-repeat;
-//   background-size: contain;
-//   margin-bottom: 20px;
-// `;
 
 export const Title = styled.div`
   margin-bottom: 109px;

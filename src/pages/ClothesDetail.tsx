@@ -1,141 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AllClothesData } from '../api/firebase';
-import { ClothesItem } from '../components/ClothesList';
-import styled from 'styled-components';
 import { useComments } from '../hooks/CommenUtils';
-import RouterButton from '../components/RouterButton';
-
-const Container = styled.div`
-  /* border: 1px solid blue; */
-  width: 1080px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  @media (max-width: 720px) {
-    width: 720px;
-  }
-`;
-
-const MainImgWrap = styled.div`
-  width: 60%;
-  height: 690px;
-  /* border: 1px solid blue; */
-  /* @media (max-width: 720px) {
-    width: 300px;
-  } */
-`;
-
-const MainImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  border: 1px solid #999;
-`;
-const ClothesContainer = styled.div`
-  /* display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  flex-basis: calc(25% - 20px); */
-  /* width: 1080px; */
-  /* border: 1px solid red; */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  img {
-    height: 350px;
-    width: 100%;
-    object-fit: cover;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border-radius: 8px;
-    border: 1px solid #999;
-  }
-  @media (max-width: 720px) {
-    justify-content: space-around;
-  }
-`;
-
-const Test = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
-  flex-basis: 250px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    transform: translateY(-5px) scale(1);
-  }
-  /* flex-basis: calc(25% - 20px); */
-
-  p {
-    margin-top: 10px;
-  }
-`;
-
-const InputWrap = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 150px;
-  margin-top: 20px;
-`;
-
-const CommentInput = styled.input`
-  width: 100%;
-  height: 70%;
-  margin-bottom: 10px;
-  font-size: 15px;
-`;
-
-const CommentButton = styled.button`
-  background-color: #5383e8;
-  color: white;
-  width: 60%;
-  height: 30%;
-  border-radius: 10px;
-  border: none;
-  font-size: 15px;
-  font-weight: 300;
-  cursor: pointer;
-`;
-
-const CommentContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-`;
-
-const CommentItem = styled.div`
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  width: calc(50% - 5px);
-  box-sizing: border-box;
-  P {
-    margin-left: 10px;
-  }
-`;
-
-interface ClothesDetailProps {
-  itemName: string;
-  imageURL: string;
-  itemDescription: string;
-}
+import {
+  ClothesContainer,
+  CommentButton,
+  CommentContainer,
+  CommentInput,
+  CommentItem,
+  Container,
+  InputWrap,
+  MainImage,
+  MainImgWrap,
+  RecommendationList,
+} from './DetailStyles';
+import { ClothesItem } from '../types/ClothesItem';
 
 const ClothesDetail: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { itemName, imageURL, itemDescription } =
-    location.state as ClothesDetailProps;
+  const { itemName, imageURL } = location.state;
   const [randomClothes, setRandomClothes] = useState<ClothesItem[]>([]);
 
   const { comments, commentText, handleCommentChange, onSubmitComment } =
@@ -191,15 +76,16 @@ const ClothesDetail: React.FC = () => {
         <MainImage src={imageURL} alt={itemName} />
       </MainImgWrap>
 
-      {/* <p>{itemDescription}</p> */}
-
       <h3>추천 옷</h3>
       <ClothesContainer>
-        {randomClothes.map((item, index) => (
-          <Test key={index} onClick={() => handleItemClick(item)}>
+        {randomClothes.map((item) => (
+          <RecommendationList
+            key={uuidv4()}
+            onClick={() => handleItemClick(item)}
+          >
             <img src={item.imageURL} alt={item.name} />
             <p>{item.name}</p>
-          </Test>
+          </RecommendationList>
         ))}
       </ClothesContainer>
 
