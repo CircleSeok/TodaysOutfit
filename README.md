@@ -1,4 +1,4 @@
-# 프로젝트명 : Buying
+# 프로젝트명 : TodysOutfit
 
 
 ![todayoutfit- img](https://github.com/CircleSeok/TodaysOutfit/assets/107212281/fb6a9647-9890-43b0-a798-515e239ed9c2)
