@@ -5,7 +5,7 @@
 
 
 
-- 쇼핑몰 웹사이트
+- 현재 기온과 기온에 어울리는 옷차림 추천 및 여가 활동 추천 웹
 ---
 
 ## 🌱서비스 화면
@@ -24,7 +24,7 @@
       옷 추천
     </td>
     <td align="center">
-      <img width="800" height="500" src="https://github.com/CircleSeok/TodaysOutfit/assets/107212281/a15f1b3d-53f7-4642-a717-1275b631a5ae](https://github.com/CircleSeok/TodaysOutfit/assets/107212281/c6b3d739-5667-4eda-826a-9c3e7cd9fe4e" />
+      <img width="800" height="500" src="https://github.com/CircleSeok/TodaysOutfit/assets/107212281/9e263570-61c6-47b1-9b0b-52ca0446b91a" />
     </td>
     </tr>
     <tr>
